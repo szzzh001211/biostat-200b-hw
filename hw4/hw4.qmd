@@ -258,10 +258,10 @@ The distribution of `log(SpikeIgG)` and `log(SpikeIgA)` is approximately normal.
 
 b. The scatterplot of `SpikeIgG` (y) versus `SpikeIgA` (x) with a loess smooth and the linear model fit is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-04 14.08.19.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-05 10.40.17.png" width="80%"/>
 </p>
 <p align="center">
-<img src="./screenshot/截屏2024-02-04 14.08.30.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-05 10.40.24.png" width="80%"/>
 </p>
 It is obvious that $x$ and $y$ values are concentrated in a small-value region. The linear model fit is not good.
 
@@ -287,7 +287,7 @@ The model fit appears to be a good fit to the data as the residuals are normally
 a. In the covid_immune dataset, I created a variable `peakDiseaseSeverity` that is coded as 1 = asymptomatic or mild, 2 = moderate, 3 = severe. Determine the sample sizes in each category that have data for both `daysPSO` and `SpikeIgG`.\
 b. Fit a model with an interaction between `daysPSO` and peak disease severity. Use asymptomatic/mild as the reference category. The outcome variable should be log-transformed `SpikeIgG`.\
 c. Conduct a joint test of whether the two interaction terms are equal to zero (this will be an F test).\
-d. Regardless of the conclusion of the test for interaction, obtain point estimates of the half-lives of SpikeIgG for each of the 3 disease severity groups.
+d. Regardless of the conclusion of the test for interaction, obtain point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups.
 
 ### Answer:
 a. The sample sizes in each category that have data for both `daysPSO` and `SpikeIgG` are as follows:
@@ -316,6 +316,21 @@ c. The joint test of whether the two interaction terms are equal to zero is as f
 </p>
 The p-value of the joint test is $0.5511>0.05$. So we do not reject the null hypothesis and conclude that there is no significant evidence that the two interaction terms are not equal to zero
 
-d.
+d. The fitted model is 
+\begin{align*}
+log(\hat{SpikeIgG}) &= 6.78870 +1.53034 \times dismo +2.52143 \times disse - 0.00489 \times daysPSO + \\
+&\quad 0.00096 \times dismo*daysPSO - 0.00734 \times disse*daysPSO \\
+&= 6.78870 +1.53034 \times dismo +2.52143 \times disse +\\
+&\quad(- 0.00489+ 0.00096 \times dismo- 0.00734 \times disse) * daysPSO
+\end{align*}
+
+So when `peakDiseaseSeverity` is 1 = asymptomatic or mild, i.e. `dismo`=`disse`=0, the coefficient of `daysPSO` is -0.00489. When `peakDiseaseSeverity` is 2 = moderate, i.e. `dismo`=1, `disse`=0, the coefficient of `daysPSO` is -0.00489+0.00096=-0.00393. When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223. Since So the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`. The point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
+
+- For category 1 = asymptomatic or mild, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00489}=141.3$ days.
+
+- For category 2 = moderate, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00393}=176.3$ days.
+
+- For category 3 = severe, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.01223}=56.7$ days.
+
 
 
