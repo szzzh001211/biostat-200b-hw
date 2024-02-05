@@ -1,0 +1,321 @@
+---
+title: "Biostat 200B Homework 4"
+subtitle: Due Feb 9 @ 11:59PM
+author: "Ziheng Zhang_606300061"
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: false    
+---
+## Question A.1
+
+**How do we interpret the coefs of the interaction terms? Compare these parameter estimates to those from the separate models.**
+
+### Answer:
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.36.55.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.36.37.png" width="80%"/>
+</p>
+
+The parameter estimates for the model containing interaction terms are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.37.19.png" width="80%"/>
+</p>
+
+Coefficient for `nclength` = 0.30337, which means that for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the North Central region will be 0.30337 percents more than that out of North Central region. 
+
+Coefficient for `slength` = 0.43930, which means that for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.43930 percents more than that out of South region. 
+
+Coefficient for `wlength` = -0.29237, which means that for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.29237 percents less than that out of West region.
+
+The parameter estimates for the separate models are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.37.43.png" width="80%"/>
+</p>
+The coefficients in the separate model region 2 for `length` is equal to the coefficient for the interaction 
+terms `nclength` in the full model plus the coefficient for `length` in the full model.\
+xxxx
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.37.52.png" width="80%"/>
+</p>
+The coefficients in the separate model region 3 for `length` is equal to the coefficient for the interaction 
+terms `slength` in the full model plus the coefficient for `length` in the full model.\
+xxx
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.38.01.png" width="80%"/>
+</p>
+The coefficients in the separate model region 4 for `length` is equal to the coefficient for the interaction 
+terms `wlength` in the full model plus the coefficient for `length` in the full model.\
+xxx
+
+## Question A.2
+
+**How would we test whether the slope coef for hospitals in the North Central region is equal to the slope coef for hospitals in the South region? Run this test.**
+
+### Answer:
+The SAS codes and test resutls are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.42.50.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.43.14.png" width="80%"/>
+</p>
+xxxxxx
+
+## Question A.3
+
+**How would we test whether the slope coef for hospitals in the West region is equal to the slope coef for hospitals in the North East region? Run this test**
+
+### Answer: 
+The SAS codes and test resutls are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.43.00.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.43.28.png" width="80%"/>
+</p>
+xxxxxx
+
+## Question A.4
+
+**How do these regression coefficients compare to the previous ones, with length not centered? Interpret each regression coef, including the intercept.**
+
+### Answer:
+The SAS codes and parameter estimates for the centered model are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.45.19.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.45.35.png" width="80%"/>
+</p>
+
+Coefficients for `lengthc`, `nclengthc`, `slengthc`, and `wlengthc` are the same as the previous ones.
+
+Coefficient for intercept = 4.42042 and the interpretation is: when the values of `regnc`, `regs`, `regw`, `lengthc`, 
+`nclengthc`, `slengthc`, and `wlengthc` are all equal to zero, the estimated mean `risk` is 4.42042 percents. 
+However, this is only a meaningful interpretation if x=0 is reasonable.
+
+Coefficient for `regnc` = -0.04825 and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 2 is 0.04825 lower than than that in region 1.
+
+Coefficient for `regs` = -0.15325 and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 3 is 0.15325 lower than than that in region 1.
+
+Coefficient for `regw` = -0.01893 and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 4 is 0.01893 lower than than that in region 1.
+
+Coefficient for `length` = 0.30556 and the interpretation is: for every one increase in the `length`, the estimated
+mean `risk` in region 1 will increase by 0.30556 percents.
+
+Coefficient for `nclengthc` = 0.30337 and the interpretation is: for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the North Central region will be 0.30337 percents more than that out of North Central region. 
+
+Coefficient for `slength` = 0.43930 and the interpretation is: for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.43930 percents more than that out of South region. 
+
+Coefficient for `wlength` = -0.29237 and the interpretation is: for every one increase in 
+average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.29237 percents less than that out of West region.
+
+<p align="center">
+<img src="./screenshot/WechatIMG681.jpg" width="80%"/>
+</p>
+
+## Question B.1
+
+**Log transformations**: Fit the following models and provide the parameter estimate output (coefs, SEs, p-values), and interpret the regression coefficient associated with the predictor variable. Also, comment briefly on the model fit (residual) diagnostics as to whether the model appears to be a good fit to the data and whether the assumptions of the model are met.
+
+a. Regress `log10 SpikeIgG` (Y) on `days PSO` (X).\
+b. Regress `ln SpikeIgG` (Y) on `days PSO` (X).\
+c. Regress `days PSO` on `ln(age)`.
+
+### Answer:
+a.  The fitted model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.01.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.05.png" width="80%"/>
+</p>
+
+The parameter estimate output and the residual diagnostics are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.33.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.47.png" width="80%"/>
+</p>
+
+Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $10^{-0.00192}=0.996$, i.e., a 0.4% decrease. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+
+b.  The fitted model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.01.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.08.png" width="80%"/>
+</p>
+
+The parameter estimate output and the residual diagnostics are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.40.23.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.40.39.png" width="80%"/>
+</p>
+
+Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $e^{-0.00442}=0.996$, i.e., a 0.4% decrease. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+
+c.  The fitted model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.01.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.12.png" width="80%"/>
+</p>
+
+The parameter estimate output and the residual diagnostics are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.40.48.png" width="80%"/>
+</p>
+
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.41.02.png" width="80%"/>
+</p>
+
+Interpretation for coefficient of `ln(age)`: For every 1% increase in `age`, the estimated mean `days PSO` will increase by $0.01*16.13521=0.16$. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+
+## Question B.2
+
+**Log-log model**: Using the covid_immune data, fit and interpret a log(Y)-log(X) model for the relationship between `SpikeIgG` and `SpikeIgA`. This should include doing the following:
+
+a. Produce and examine the distributions of `SpikeIgG` and `SpikeIgA`, on their original scale and after log transformation.\
+b. Produce a scatterplot of `SpikeIgG` (y) versus `SpikeIgA` (x) with a loess smooth and the linear model fit.\
+c. Interpret the coefficient associated with `log(SpikeIgA)` from the log-log model.\
+d. Use residuals to check whether the log-log model is a reasonable fit to the data.
+
+### Answer:
+a. 
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 13.28.01.png" width="80%"/>
+</p>
+The distribution of `SpikeIgG` and `SpikeIgA` on their original scale are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.04.08.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.04.34.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.04.40.png" width="80%"/>
+</p>
+The distribution of `SpikeIgG` and `SpikeIgA` is right-skewed.
+
+After log transformation, the distribution of `log(SpikeIgG)` and `log(SpikeIgA)` are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.04.19.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.04.53.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.05.00.png" width="80%"/>
+</p>
+The distribution of `log(SpikeIgG)` and `log(SpikeIgA)` is approximately normal.
+
+b. The scatterplot of `SpikeIgG` (y) versus `SpikeIgA` (x) with a loess smooth and the linear model fit is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.08.19.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.08.30.png" width="80%"/>
+</p>
+It is obvious that $x$ and $y$ values are concentrated in a small-value region. The linear model fit is not good.
+
+c. The fitted model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.11.29.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.11.50.png" width="80%"/>
+</p>
+Interpretation for coefficient of `log(SpikeIgA)`: For every 1% increase in `SpikeIgA`, the estimated mean `SpikeIgG` will increase by 0.47350%.
+
+d. The residual plots are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 14.11.57.png" width="80%"/>
+</p>
+The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met. So the log-log model is a reasonable fit to the data.
+
+## Question B.3
+
+**Interaction between a categorical and continuous variable.** For this problem, we will use interactions to explore whether the rate of exponential decay of `SpikeIgG` depends on the individual’s peak disease severity.
+
+a. In the covid_immune dataset, I created a variable `peakDiseaseSeverity` that is coded as 1 = asymptomatic or mild, 2 = moderate, 3 = severe. Determine the sample sizes in each category that have data for both `daysPSO` and `SpikeIgG`.\
+b. Fit a model with an interaction between `daysPSO` and peak disease severity. Use asymptomatic/mild as the reference category. The outcome variable should be log-transformed `SpikeIgG`.\
+c. Conduct a joint test of whether the two interaction terms are equal to zero (this will be an F test).\
+d. Regardless of the conclusion of the test for interaction, obtain point estimates of the half-lives of SpikeIgG for each of the 3 disease severity groups.
+
+### Answer:
+a. The sample sizes in each category that have data for both `daysPSO` and `SpikeIgG` are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.18.27.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.18.37.png" width="80%"/>
+</p>
+For category 1 = asymptomatic or mild, the sample size is 206. For category 2 = moderate, the sample size is 9. For category 3 = severe, the sample size is 12.
+
+b. The fitted model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.18.45.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.18.54.png" width="80%"/>
+</p>
+
+c. The joint test of whether the two interaction terms are equal to zero is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.18.59.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-04 22.19.10.png" width="80%"/>
+</p>
+The p-value of the joint test is $0.5511>0.05$. So we do not reject the null hypothesis and conclude that there is no significant evidence that the two interaction terms are not equal to zero
+
+d.
+
+
