@@ -39,6 +39,14 @@ The parameter estimates for the model containing interaction terms are as follow
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.37.19.png" width="80%"/>
 </p>
+The fitted model is
+\begin{align*}
+\hat{risk}&=\hat{\beta_0}+\hat{\beta}_{\text{regnc}}regnc+\hat{\beta}_{\text{regs}}regs+\hat{\beta}_{\text{regw}}regw+\hat{\beta}_{\text{length}}length+\\
+&\quad \hat{\beta}_{\text{nclength}}nclength+\hat{\beta}_{\text{slength}}slength+\hat{\beta}_{\text{wlength}}wlength\\
+&=\hat{\beta_0}+\hat{\beta}_{\text{regnc}}regnc+\hat{\beta}_{\text{regs}}regs+\hat{\beta}_{\text{regw}}regw+\\
+&\quad (\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{nclength}}regnc+\hat{\beta}_{\text{slength}}regs+\hat{\beta}_{\text{wlength}}regw)length
+\end{align*}
+
 
 Coefficient for `nclength` = 0.30337, which means that for every one increase in 
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
@@ -56,23 +64,24 @@ The parameter estimates for the separate models are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.37.43.png" width="80%"/>
 </p>
-The coefficients in the separate model region 2 for `length` is equal to the coefficient for the interaction 
-terms `nclength` in the full model plus the coefficient for `length` in the full model.\
-xxxx
+The coefficients in the separate model region 2 for `length` is 0.60893, which is equal to the coefficient for the interaction 
+terms `nclength` in the original model, 0.30337, plus the coefficient for `length` in the original model, 0.30556.\
+$\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{nclength}} + \hat{\beta}_{\text{length}} = 0.30337 + 0.30556 = 0.60893$
+
 
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.37.52.png" width="80%"/>
 </p>
-The coefficients in the separate model region 3 for `length` is equal to the coefficient for the interaction 
-terms `slength` in the full model plus the coefficient for `length` in the full model.\
-xxx
+The coefficients in the separate model region 3 for `length` is 0.74486, which is equal to the coefficient for the interaction 
+terms `slength` in the original model, 0.43930, plus the coefficient for `length` in the original model, 0.30556.\
+$\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{slength}} + \hat{\beta}_{\text{length}} = 0.43930 + 0.30556 = 0.74486$
 
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.38.01.png" width="80%"/>
 </p>
-The coefficients in the separate model region 4 for `length` is equal to the coefficient for the interaction 
-terms `wlength` in the full model plus the coefficient for `length` in the full model.\
-xxx
+The coefficients in the separate model region 4 for `length` is 0.01319, which is equal to the coefficient for the interaction 
+terms `wlength` in the original model, -0.29237, plus the coefficient for `length` in the original model, 0.30556.\
+$\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{wlength}} + \hat{\beta}_{\text{length}} = -0.29237 + 0.30556 = 0.01319$
 
 ## Question A.2
 
@@ -86,7 +95,8 @@ The SAS codes and test resutls are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.43.14.png" width="80%"/>
 </p>
-xxxxxx
+For the North Cetnral region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{nclength}}$, and for the South region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{slength}}$. Since we want to test whether the slope coef for hospitals in the North Central region is equal to the slope coef for hospitals in the South region, then we only need to test whether $\hat{\beta}_{\text{nclength}} = \hat{\beta}_{\text{slength}}$. Therefore, the null hypothesis $H_0: \beta_{\text{nclength}} = \beta_{\text{slength}}$ is tested against the alternative hypothesis $H_1: \beta_{\text{nclength}} \neq \beta_{\text{slength}}$.\
+From the F-test, we can see that the p-value is $0.5374>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North Central region is not equal to the slope coef for hospitals in the South region.
 
 ## Question A.3
 
@@ -100,7 +110,8 @@ The SAS codes and test resutls are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.43.28.png" width="80%"/>
 </p>
-xxxxxx
+For the North East region, the slope coef for `length` is $\hat{\beta}_{\text{length}}$, i.e. `regnc`=`regs`=`regw`=0, and for the West region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{wlength}}$. Since we want to test whether the slope coef for hospitals in the North East region is equal to the slope coef for hospitals in the West region, then we only need to test whether $\hat{\beta}_{\text{wlength}} = 0$. Therefore, the null hypothesis $H_0: \beta_{\text{wlength}} = 0$ is tested against the alternative hypothesis $H_1: \beta_{\text{wlength}} \neq 0$.\
+From the F-test, we can see that the p-value is $0.3147>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North East region is not equal to the slope coef for hospitals in the West region.
 
 ## Question A.4
 
@@ -115,20 +126,44 @@ The SAS codes and parameter estimates for the centered model are as follows:
 <img src="./screenshot/截屏2024-02-04 14.45.35.png" width="80%"/>
 </p>
 
-Coefficients for `lengthc`, `nclengthc`, `slengthc`, and `wlengthc` are the same as the previous ones.
+Coefficients for `lengthc`, `nclengthc`, `slengthc`, and `wlengthc` are the same as the previous ones. Intercept and coefficients for `regnc`, `regs`, and `regw` change. The fitted model for the centered model is:
+\begin{align*}
+\hat{risk}&=\hat{\beta_0}'+\hat{\beta}_{\text{regnc}}'regnc+\hat{\beta}_{\text{regs}}'regs+\hat{\beta}_{\text{regw}}'regw+\\
+&\quad (\hat{\beta}_{\text{length}}'+\hat{\beta}_{\text{nclength}}'regnc+\hat{\beta}_{\text{slength}}'regs+\hat{\beta}_{\text{wlength}}'regw)(length-\bar{length})\\
+&=\hat{\beta_0}'+\hat{\beta}_{\text{regnc}}'regnc+\hat{\beta}_{\text{regs}}'regs+\hat{\beta}_{\text{regw}}'regw-\\
+&\quad (\hat{\beta}_{\text{length}}'+\hat{\beta}_{\text{nclength}}'regnc+\hat{\beta}_{\text{slength}}'regs+\hat{\beta}_{\text{wlength}}'regw)\bar{length}+\\
+&\quad (\hat{\beta}_{\text{length}}'+\hat{\beta}_{\text{nclength}}'regnc+\hat{\beta}_{\text{slength}}'regs+\hat{\beta}_{\text{wlength}}'regw)length\\
+&=\hat{\beta_0}+\hat{\beta}_{\text{regnc}}regnc+\hat{\beta}_{\text{regs}}regs+\hat{\beta}_{\text{regw}}regw+\\
+&\quad (\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{nclength}}regnc+\hat{\beta}_{\text{slength}}regs+\hat{\beta}_{\text{wlength}}regw)length
+\end{align*}
 
-Coefficient for intercept = 4.42042 and the interpretation is: when the values of `regnc`, `regs`, `regw`, `lengthc`, 
+Therefore, 
+\begin{align*}
+&\hat{\beta_0}'+\hat{\beta}_{\text{regnc}}'regnc+\hat{\beta}_{\text{regs}}'regs+\hat{\beta}_{\text{regw}}'regw-(\hat{\beta}_{\text{length}}'+\hat{\beta}_{\text{nclength}}'regnc+\\
+&\hat{\beta}_{\text{slength}}'regs+\hat{\beta}_{\text{wlength}}'regw)\bar{length}=\hat{\beta_0}+\hat{\beta}_{\text{regnc}}regnc+\hat{\beta}_{\text{regs}}regs+\hat{\beta}_{\text{regw}}regw
+\end{align*}
+
+Also, 
+\begin{align*}
+&(\hat{\beta}_{\text{length}}'+\hat{\beta}_{\text{nclength}}'regnc+\hat{\beta}_{\text{slength}}'regs+\hat{\beta}_{\text{wlength}}'regw)length=\\
+&(\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{nclength}}regnc+\hat{\beta}_{\text{slength}}regs+\hat{\beta}_{\text{wlength}}regw)length
+\end{align*}
+
+So we have:
+\begin{align*}
+&\hat{\beta}_{\text{length}}'=\hat{\beta}_{\text{length}}\\
+&\hat{\beta}_{\text{nclength}}'=\hat{\beta}_{\text{nclength}}\\
+&\hat{\beta}_{\text{slength}}'=\hat{\beta}_{\text{slength}}\\
+&\hat{\beta}_{\text{wlength}}'=\hat{\beta}_{\text{wlength}}\\
+&\hat{\beta_0}'=\hat{\beta_0}+\hat{\beta}_{\text{length}}\bar{length}\\
+&\hat{\beta}_{\text{regnc}}'=\hat{\beta}_{\text{regnc}}+\hat{\beta}_{\text{nclength}}\bar{length}\\
+&\hat{\beta}_{\text{regs}}'=\hat{\beta}_{\text{regs}}+\hat{\beta}_{\text{slength}}\bar{length}\\
+&\hat{\beta}_{\text{regw}}'=\hat{\beta}_{\text{regw}}+\hat{\beta}_{\text{wlength}}\bar{length}
+\end{align*}
+
+Coefficient for intercept = 4.42042 = 1.47235+0.30556 $\times$\times 9.648 and the interpretation is: when the values of `regnc`, `regs`, `regw`, `lengthc`, 
 `nclengthc`, `slengthc`, and `wlengthc` are all equal to zero, the estimated mean `risk` is 4.42042 percents. 
 However, this is only a meaningful interpretation if x=0 is reasonable.
-
-Coefficient for `regnc` = -0.04825 and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 2 is 0.04825 lower than than that in region 1.
-
-Coefficient for `regs` = -0.15325 and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 3 is 0.15325 lower than than that in region 1.
-
-Coefficient for `regw` = -0.01893 and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 4 is 0.01893 lower than than that in region 1.
 
 Coefficient for `length` = 0.30556 and the interpretation is: for every one increase in the `length`, the estimated
 mean `risk` in region 1 will increase by 0.30556 percents.
@@ -145,9 +180,15 @@ Coefficient for `wlength` = -0.29237 and the interpretation is: for every one in
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
 in the South region will be 0.29237 percents less than that out of West region.
 
-<p align="center">
-<img src="./screenshot/WechatIMG681.jpg" width="80%"/>
-</p>
+Coefficient for `regnc` = -0.04825 = -2.97515+ 0.30337 $\times$ 9.648 and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 2 is 0.04825 lower than than that in region 1.
+
+Coefficient for `regs` = -0.15325= -4.39164+ 0.43930 $\times$ 9.648 and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 3 is 0.15325 lower than than that in region 1.
+
+Coefficient for `regw` = -0.01893= 2.80186-0.29237 $\times$ 9.648$ and the interpretation is: when the `length` is equal to zero, the estimated 
+mean `risk` in region 4 is 0.01893 lower than than that in region 1.
+
 
 ## Question B.1
 
@@ -324,7 +365,9 @@ log(\hat{SpikeIgG}) &= 6.78870 +1.53034 \times dismo +2.52143 \times disse - 0.0
 &\quad(- 0.00489+ 0.00096 \times dismo- 0.00734 \times disse) * daysPSO
 \end{align*}
 
-So when `peakDiseaseSeverity` is 1 = asymptomatic or mild, i.e. `dismo`=`disse`=0, the coefficient of `daysPSO` is -0.00489. When `peakDiseaseSeverity` is 2 = moderate, i.e. `dismo`=1, `disse`=0, the coefficient of `daysPSO` is -0.00489+0.00096=-0.00393. When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223. Since So the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`. The point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
+So when `peakDiseaseSeverity` is 1 = asymptomatic or mild, i.e. `dismo`=`disse`=0, the coefficient of `daysPSO` is -0.00489.\
+When `peakDiseaseSeverity` is 2 = moderate, i.e. `dismo`=1, `disse`=0, the coefficient of `daysPSO` is -0.00489+0.00096=-0.00393.\
+When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223. Since the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`, then the point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
 
 - For category 1 = asymptomatic or mild, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00489}=141.3$ days.
 
