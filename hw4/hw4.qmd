@@ -367,7 +367,8 @@ log(\hat{SpikeIgG}) &= 6.78870 +1.53034 \times dismo +2.52143 \times disse - 0.0
 
 So when `peakDiseaseSeverity` is 1 = asymptomatic or mild, i.e. `dismo`=`disse`=0, the coefficient of `daysPSO` is -0.00489.\
 When `peakDiseaseSeverity` is 2 = moderate, i.e. `dismo`=1, `disse`=0, the coefficient of `daysPSO` is -0.00489+0.00096=-0.00393.\
-When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223. Since the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`, then the point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
+When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223.\
+Since the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`, then the point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
 
 - For category 1 = asymptomatic or mild, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00489}=141.3$ days.
 
