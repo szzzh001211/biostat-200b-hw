@@ -50,15 +50,15 @@ The fitted model is
 
 Coefficient for `nclength` = 0.30337, which means that for every one increase in 
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the North Central region will be 0.30337 percents more than that out of North Central region. 
+in the North Central region will be 0.30337 percents more than that in the reference region (North East). 
 
 Coefficient for `slength` = 0.43930, which means that for every one increase in 
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.43930 percents more than that out of South region. 
+in the South region will be 0.43930 percents more than that in the reference region (North East). 
 
 Coefficient for `wlength` = -0.29237, which means that for every one increase in 
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.29237 percents less than that out of West region.
+in the South region will be 0.29237 percents less than that in the reference region (North East).
 
 The parameter estimates for the separate models are as follows:
 <p align="center">
@@ -66,22 +66,27 @@ The parameter estimates for the separate models are as follows:
 </p>
 The coefficients in the separate model region 2 for `length` is 0.60893, which is equal to the coefficient for the interaction 
 terms `nclength` in the original model, 0.30337, plus the coefficient for `length` in the original model, 0.30556.\
+The intercept in the separate model region 2 for `length` is -1.50280, which is equal to the intercept in the original model, 1.47235, plus the coefficient for `regnc`, -2.97515.\
 $\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{nclength}} + \hat{\beta}_{\text{length}} = 0.30337 + 0.30556 = 0.60893$
-
+$\hat{\beta_0}' = \hat{\beta_0} + \hat{\beta}_{\text{regnc}} = 1.47235 - 2.97515 = -1.50280$
 
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.37.52.png" width="80%"/>
 </p>
 The coefficients in the separate model region 3 for `length` is 0.74486, which is equal to the coefficient for the interaction 
 terms `slength` in the original model, 0.43930, plus the coefficient for `length` in the original model, 0.30556.\
+The intercept in the separate model region 3 for `length` is -2.91928, which is equal to the intercept in the original model, 1.47235, plus the coefficient for `regs`, -4.39164.\
 $\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{slength}} + \hat{\beta}_{\text{length}} = 0.43930 + 0.30556 = 0.74486$
+$\hat{\beta_0}' = \hat{\beta_0} + \hat{\beta}_{\text{regs}} = 1.47235 - 4.39164 = -2.91928$
 
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.38.01.png" width="80%"/>
 </p>
 The coefficients in the separate model region 4 for `length` is 0.01319, which is equal to the coefficient for the interaction 
 terms `wlength` in the original model, -0.29237, plus the coefficient for `length` in the original model, 0.30556.\
+The intercept in the separate model region 4 for `length` is 4.27421, which is equal to the intercept in the original model, 1.47235, plus the coefficient for `regw`, 2.80186.\
 $\hat{\beta}_{\text{length}}' = \hat{\beta}_{\text{wlength}} + \hat{\beta}_{\text{length}} = -0.29237 + 0.30556 = 0.01319$
+$\hat{\beta_0}' = \hat{\beta_0} + \hat{\beta}_{\text{regw}} = 1.47235 + 2.80186 = 4.27421$
 
 ## Question A.2
 
@@ -96,7 +101,7 @@ The SAS codes and test resutls are as follows:
 <img src="./screenshot/截屏2024-02-04 14.43.14.png" width="80%"/>
 </p>
 For the North Cetnral region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{nclength}}$, and for the South region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{slength}}$. Since we want to test whether the slope coef for hospitals in the North Central region is equal to the slope coef for hospitals in the South region, then we only need to test whether $\hat{\beta}_{\text{nclength}} = \hat{\beta}_{\text{slength}}$. Therefore, the null hypothesis $H_0: \beta_{\text{nclength}} = \beta_{\text{slength}}$ is tested against the alternative hypothesis $H_1: \beta_{\text{nclength}} \neq \beta_{\text{slength}}$.\
-From the F-test, we can see that the p-value is $0.5374>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North Central region is not equal to the slope coef for hospitals in the South region.
+From the F-test, $F(1,105)$, we can see that the p-value is $0.5374>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North Central region is not equal to the slope coef for hospitals in the South region.
 
 ## Question A.3
 
@@ -111,7 +116,7 @@ The SAS codes and test resutls are as follows:
 <img src="./screenshot/截屏2024-02-04 14.43.28.png" width="80%"/>
 </p>
 For the North East region, the slope coef for `length` is $\hat{\beta}_{\text{length}}$, i.e. `regnc`=`regs`=`regw`=0, and for the West region, the slope coef for `length` is $\hat{\beta}_{\text{length}}+\hat{\beta}_{\text{wlength}}$. Since we want to test whether the slope coef for hospitals in the North East region is equal to the slope coef for hospitals in the West region, then we only need to test whether $\hat{\beta}_{\text{wlength}} = 0$. Therefore, the null hypothesis $H_0: \beta_{\text{wlength}} = 0$ is tested against the alternative hypothesis $H_1: \beta_{\text{wlength}} \neq 0$.\
-From the F-test, we can see that the p-value is $0.3147>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North East region is not equal to the slope coef for hospitals in the West region.
+From the F-test, $F(1,105)$, we can see that the p-value is $0.3147>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that the slope coef for hospitals in the North East region is not equal to the slope coef for hospitals in the West region.
 
 ## Question A.4
 
@@ -161,33 +166,27 @@ So we have:
 &\hat{\beta}_{\text{regw}}'=\hat{\beta}_{\text{regw}}+\hat{\beta}_{\text{wlength}}\bar{length}
 \end{align*}
 
-Coefficient for intercept = 4.42042 = 1.47235+0.30556 $\times$\times 9.648 and the interpretation is: when the values of `regnc`, `regs`, `regw`, `lengthc`, 
-`nclengthc`, `slengthc`, and `wlengthc` are all equal to zero, the estimated mean `risk` is 4.42042 percents. 
-However, this is only a meaningful interpretation if x=0 is reasonable.
+Coefficient for intercept = 4.42042 = 1.47235+0.30556 $\times$ 9.648 and the interpretation is: when the value of `length` is equal to its mean value, and the values of `regnc`, `regs`, `regw`, `nclengthc`, `slengthc`, and `wlengthc` are all equal to zero, i.e. the reference region, the estimated mean `risk` for the reference region (North East) is 4.42042 percents. However, this is only a meaningful interpretation if x=0 is reasonable.
 
-Coefficient for `length` = 0.30556 and the interpretation is: for every one increase in the `length`, the estimated
-mean `risk` in region 1 will increase by 0.30556 percents.
+Coefficient for `lengthc` = 0.30556 and the interpretation is: for every one increase in the `length`, the average length of stay of all patients in hospital (in days), the estimated mean `risk` in reference region (North East) will increase by 0.30556 percents.
 
-Coefficient for `nclengthc` = 0.30337 and the interpretation is: for every one increase in 
-average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the North Central region will be 0.30337 percents more than that out of North Central region. 
+Coefficient for `nclengthc` = 0.30337 and the interpretation is: for every one increase in the `length`, the average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the North Central region will be 0.30337 percents more than that in the reference region (North East). 
 
-Coefficient for `slength` = 0.43930 and the interpretation is: for every one increase in 
-average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.43930 percents more than that out of South region. 
+Coefficient for `slength` = 0.43930 and the interpretation is: for every one increase in the `length`, the average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.43930 percents more than that in the reference region (North East). 
 
-Coefficient for `wlength` = -0.29237 and the interpretation is: for every one increase in 
-average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.29237 percents less than that out of West region.
+Coefficient for `wlength` = -0.29237 and the interpretation is: for every one increase in the `length`, the average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
+in the South region will be 0.29237 percents less than that in the reference region (North East).
 
-Coefficient for `regnc` = -0.04825 = -2.97515+ 0.30337 $\times$ 9.648 and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 2 is 0.04825 lower than than that in region 1.
+Coefficient for `regnc` = -0.04825 = -2.97515+ 0.30337 $\times$ 9.648 and the interpretation is: when the value of `length` is equal to its mean value, the estimated 
+mean `risk` in the North Central region is 0.04825 less than than that in the reference region (North East).
 
-Coefficient for `regs` = -0.15325= -4.39164+ 0.43930 $\times$ 9.648 and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 3 is 0.15325 lower than than that in region 1.
+Coefficient for `regs` = -0.15325= -4.39164+ 0.43930 $\times$ 9.648 and the interpretation is: when the value of `length` is equal to its mean value, the estimated 
+mean `risk` in the South region is 0.15325 less than that in the reference region (North East).
 
-Coefficient for `regw` = -0.01893= 2.80186-0.29237 $\times$ 9.648$ and the interpretation is: when the `length` is equal to zero, the estimated 
-mean `risk` in region 4 is 0.01893 lower than than that in region 1.
+Coefficient for `regw` = -0.01893= 2.80186-0.29237 $\times$ 9.648 and the interpretation is: when the value of `length` is equal to its mean value, the estimated 
+mean `risk` in the West region is 0.01893 less than that in the reference region (North East).
 
 
 ## Question B.1
@@ -217,7 +216,8 @@ The parameter estimate output and the residual diagnostics are as follows:
 <img src="./screenshot/截屏2024-02-04 13.28.47.png" width="80%"/>
 </p>
 
-Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $10^{-0.00192}=0.996$, i.e., a 0.4% decrease. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $10^{-0.00192}=0.996$, i.e., a 0.4% decrease.\
+From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ and the residual plot does not show any special pattern. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met but the model is not a good fit to the data because R-Square ($R^2$) is only 0.04.\
 
 b.  The fitted model is as follows:
 <p align="center">
@@ -237,7 +237,8 @@ The parameter estimate output and the residual diagnostics are as follows:
 <img src="./screenshot/截屏2024-02-04 13.40.39.png" width="80%"/>
 </p>
 
-Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $e^{-0.00442}=0.996$, i.e., a 0.4% decrease. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+Interpretation for coefficient of `days PSO`: The effect of a one-unit increase in `days PSO` would be to multiply the estimated mean `Spike IgG` by $e^{-0.00442}=0.996$, i.e., a 0.4% decrease.\
+From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ and the residual plot does not show any special pattern. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met but the model is not a good fit to the data because R-Square ($R^2$) is only 0.04.\
 
 c.  The fitted model is as follows:
 <p align="center">
@@ -257,7 +258,8 @@ The parameter estimate output and the residual diagnostics are as follows:
 <img src="./screenshot/截屏2024-02-04 13.41.02.png" width="80%"/>
 </p>
 
-Interpretation for coefficient of `ln(age)`: For every 1% increase in `age`, the estimated mean `days PSO` will increase by $0.01*16.13521=0.16$. The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met and the model appears to be a good fit to the data.\
+Interpretation for coefficient of `ln(age)`: For every 1% increase in `age`, the estimated mean `days PSO` will increase by $0.01*16.13521=0.16$.\
+From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ and the residual plot does not show any special pattern. And the error variance are roughly constant across all observations. However, from QQ plot, all points do not follow a straight line and there is a special pattern. So the assumptions of the normal error regression model are not met and the model is not a good fit to the data because R-Square ($R^2$) is only 0.0072.\
 
 ## Question B.2
 
@@ -319,7 +321,7 @@ d. The residual plots are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 14.11.57.png" width="80%"/>
 </p>
-The model fit appears to be a good fit to the data as the residuals are normally distributed and the assumptions of the model are met. From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the assumptions of the normal error regression model are approximately met. So the log-log model is a reasonable fit to the data.
+From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ and the residual plot does not show any special pattern. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. R-Square ($R^2$) is only 0.2778. So the assumptions of the normal error regression model are approximately met and the log-log model is a reasonable fit to the data.
 
 ## Question B.3
 
@@ -355,7 +357,8 @@ c. The joint test of whether the two interaction terms are equal to zero is as f
 <p align="center">
 <img src="./screenshot/截屏2024-02-04 22.19.10.png" width="80%"/>
 </p>
-The p-value of the joint test is $0.5511>0.05$. So we do not reject the null hypothesis and conclude that there is no significant evidence that the two interaction terms are not equal to zero
+Null hypothesis: $H_0: \beta_\text{modays} = \beta_\text{sedays} = 0$; Alternative hypothesis: $H_1:$ At least one of $\beta_\text{modays}$ and $\beta_\text{sedays}$ is not equal to 0.\
+From the F-test, $F(2,222)$, we can see that the p-value of the joint test is $0.5511>0.05$, so we do not reject the null hypothesis and conclude that there is no significant evidence that at least one the two interaction terms is not equal to zero.
 
 d. The fitted model is 
 \begin{align*}
@@ -370,9 +373,9 @@ When `peakDiseaseSeverity` is 2 = moderate, i.e. `dismo`=1, `disse`=0, the coeff
 When `peakDiseaseSeverity` is 3 = severe, i.e. `dismo`=0, `disse`=1, the coefficient of `daysPSO` is -0.00489-0.00734=-0.01223.\
 Since the point estimates of the half-lives of `SpikeIgG` is $t_{1/2}=\frac{\mathrm{ln}2}{-\beta}$, where $\beta$ is the coefficient of `daysPSO`, then the point estimates of the half-lives of `SpikeIgG` for each of the 3 disease severity groups are as follows:
 
-- For category 1 = asymptomatic or mild, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00489}=141.3$ days.
+- For category 1 = asymptomatic or mild, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00489}=141.7$ days.
 
-- For category 2 = moderate, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00393}=176.3$ days.
+- For category 2 = moderate, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.00393}=176.4$ days.
 
 - For category 3 = severe, the point estimate of the half-life is $t_{1/2}=\frac{\mathrm{ln}2}{0.01223}=56.7$ days.
 
