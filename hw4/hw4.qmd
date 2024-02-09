@@ -58,7 +58,7 @@ in the South region will be 0.43930 percents more than that in the reference reg
 
 Coefficient for `wlength` = -0.29237, which means that for every one increase in 
 average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.29237 percents less than that in the reference region (North East).
+in the West region will be 0.29237 percents less than that in the reference region (North East).
 
 The parameter estimates for the separate models are as follows:
 <p align="center">
@@ -177,7 +177,7 @@ Coefficient for `slength` = 0.43930 and the interpretation is: for every one inc
 in the South region will be 0.43930 percents more than that in the reference region (North East). 
 
 Coefficient for `wlength` = -0.29237 and the interpretation is: for every one increase in the `length`, the average length of stay of all patients in hospital (in days), the increase in estimated mean `risk` 
-in the South region will be 0.29237 percents less than that in the reference region (North East).
+in the West region will be 0.29237 percents less than that in the reference region (North East).
 
 Coefficient for `regnc` = -0.04825 = -2.97515+ 0.30337 $\times$ 9.648 and the interpretation is: when the value of `length` is equal to its mean value, the estimated 
 mean `risk` in the North Central region is 0.04825 less than than that in the reference region (North East).
