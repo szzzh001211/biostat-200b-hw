@@ -37,19 +37,19 @@ The parameter estimates for the model containing interaction terms are as follow
 <img src="./screenshot/截屏2024-02-10 16.19.34.png" width="80%"/>
 </p>
 
-Intercept = -2.98003 and the interpretation is: when `logpopdens`, `bedp1000`, `hsgrad`, `poverty`, `unemp`, and `pcinck` are all zero, the estimated mean rate of active physicians (in 1990) per 1000 is $e^{-2.98003}$ = 0.0508.
+`Intercept` = -2.98003 and the interpretation is: when `logpopdens`, `bedp1000`, `hsgrad`, `poverty`, `unemp`, and `pcinck` are all zero (which are not reasonable), the estimated mean number of active physicians (in 1990) per 1000 people is $e^{-2.98003}$ = 0.0508.
 
-Coefficient for `logpopdens` = 0.04832 and the interpretation is: for every 1% increase in population density, the estimated mean rate of active physicians (in 1990) per 1000 will increase by 0.04832%, controlling for all other independent variables.
+Coefficient for `logpopdens` = 0.04832 and the interpretation is: for every 1% increase in population density, the estimated mean number of active physicians (in 1990) per 1000 people will increase by 0.04832%, controlling for all other independent variables.
 
-Coefficient for `bedp1000` = 0.15378 and the interpretation is: the effect of a one-unit increase in rate of hospital beds (in 1990) per 1000 would be to multiply the estimated mean rate of active physicians (in 1990) per 1000 by $e^{0.15378}$ = 1.166234, i.e., a 16.6% increase, controlling for all other independent variables.
+Coefficient for `bedp1000` = 0.15378 and the interpretation is: the effect of every one bed increase in hospital beds (in 1990) per 1000 people would be to multiply the estimated mean number of active physicians (in 1990) per 1000 people by $e^{0.15378}$ = 1.166234, i.e., a 16.6% increase, controlling for all other independent variables.
 
-Coefficient for `hsgrad` = 0.01711 and the interpretation is: the effect of a one-unit increase in percent of adult population (25 years and older) who completed 12 or more years of school would be to multiply the estimated mean rate of active physicians (in 1990) per 1000 by $e^{0.01711}$ = 1.017257, i.e., a 1.7% increase, controlling for all other independent variables.
+Coefficient for `hsgrad` = 0.01711 and the interpretation is: the effect of every one percent increase in percent of adult population (25 years and older) who completed 12 or more years of school would be to multiply the estimated mean number of active physicians (in 1990) per 1000 people by $e^{0.01711}$ = 1.017257, i.e., a 1.7% increase, controlling for all other independent variables.
 
-Coefficient for `poverty` = 0.04025 and the interpretation is: the effect of a one-unit increase in percent of 1990 population with income below poverty level would be to multiply the estimated mean rate of active physicians (in 1990) per 1000 by $e^{0.04025}$ = 1.041071, i.e., a 4.1% increase, controlling for all other independent variables.
+Coefficient for `poverty` = 0.04025 and the interpretation is: the effect of every one percent increase in percent of 1990 population with income below poverty level would be to multiply the estimated mean number of active physicians (in 1990) per 1000 people by $e^{0.04025}$ = 1.041071, i.e., a 4.1% increase, controlling for all other independent variables.
 
-Coefficient for `unemp` = -0.02622 and the interpretation is: the effect of a one-unit increase in percent of 1990 labor force that was unemployed would be to multiply the estimated mean rate of active physicians (in 1990) per 1000 by $e^{-0.02622}$ = 0.9741208, i.e., a 2.6% decrease, controlling for all other independent variables.
+Coefficient for `unemp` = -0.02622 and the interpretation is: the effect of every one percent increase in percent of 1990 labor force that was unemployed would be to multiply the estimated mean number of active physicians (in 1990) per 1000 people by $e^{-0.02622}$ = 0.9741208, i.e., a 2.6% decrease, controlling for all other independent variables.
 
-Coefficient for `pcinck` = 0.06515 and the interpretation is: the effect of a one-unit increase in per capita income in 1000's in 1990 (dollars) would be to multiply the estimated mean rate of active physicians (in 1990) per 1000 by $e^{0.06515}$ = 1.067319, i.e., a 6.7% increase, controlling for all other independent variables.
+Coefficient for `pcinck` = 0.06515 and the interpretation is: the effect of every one thousand dollars increase in per capita income in 1990 would be to multiply the estimated mean number of active physicians (in 1990) per 1000 people by $e^{0.06515}$ = 1.067319, i.e., a 6.7% increase, controlling for all other independent variables.
 
 ## Question A.2
 
@@ -66,7 +66,7 @@ From lecture notes, we know that the variance of the regression coefficient is g
 &= \frac{\hat{\sigma}^2}{(n-1)s^{2}_{j}} \times \frac{1}{1 - R_j^2}\\
 &=VIF_{j}\frac{\hat{\sigma}^2}{(n-1)s^{2}_{j}}
 \end{align*}
-where $\hat{\sigma}^2$ is the MSE, $s^{2}_{j}$ is the sample variance of the $j$th predictor, and $R_j^2$ is the $R^2$ obtained from regressing x_{j} on the other predictors.
+where $\hat{\sigma}^2$ is the MSE, $s^{2}_{j}$ is the sample variance of the $j$th predictor, and $R_j^2$ is the $R^2$ obtained from regressing $x_{j}$ on the other predictors.
 <p align="center">
 <img src="./screenshot/截屏2024-02-10 17.20.05.png" width="80%"/>
 </p>
@@ -74,7 +74,7 @@ where $\hat{\sigma}^2$ is the MSE, $s^{2}_{j}$ is the sample variance of the $j$
 <img src="./screenshot/截屏2024-02-10 17.20.28.png" width="80%"/>
 </p>
 
-From the SAS output, we have $\hat{\sigma}^2 = 0.30610^2=0.0937$, $s^{2}_{j} =  4.05919^2= 16.47704$, and $VIF_j = 2.38561$. Therefore, the variance of the regression coefficient is: 2.38561 $\times$ $\frac{0.0937}{439\times16.47704} = 3.09017e-05$.\
+From the SAS output, we have $\hat{\sigma}^2 = 0.30610^2=0.0937$, $s^{2}_{j} =  4.05919^2= 16.47704$, and $VIF_j = 2.38561$. Therefore, the variance of the regression coefficient is: $2.38561 \times \frac{0.0937}{439\times16.47704} = 3.09017*10^{-5}$.\
 The standard error of the regression coefficient is the square root of the variance, which is $0.00556$. The standard error of the regression coefficient given in the SAS output is $0.00556$, which is equal to the standard error calculated using the formula involving $R^2_j$.
 
 ## Question A.3
@@ -82,13 +82,13 @@ The standard error of the regression coefficient is the square root of the varia
 **In general, would you expect VIFs to increase or decrease as more predictors are added to a model?  Provide a justification for your answer. Illustrate by providing some example regressions using the CDI dataset.**
 
 ### Answer:
-In general, we can expect VIFs to increase as more predictors are added to a model. The VIF for a predictor measures the extent to which the variance of the regression coefficient for that predictor is inflated due to multicollinearity. When more predictors are added to a model, the VIFs will increase because the variance of the regression coefficient for each predictor will be inflated due to the presence of more correlated predictors. When more predictors are added to a model, the probability of the variance of each predictor that can be explained by the other predictors will increase, giving rise to an increase in the VIFs.\
+In general, we can expect VIFs to increase (or at least not decrease) as more predictors are added to a model. The VIF for a predictor measures the extent to which the variance of the regression coefficient for that predictor is inflated due to multicollinearity. When more predictors are added to a model, the VIFs will increase because the variance of the regression coefficient for each predictor will be inflated due to the presence of more correlated predictors. When more predictors are added to a model, the probability of the variance of each predictor that can be explained by the other predictors will increase, giving rise to an increase in the VIFs.\
 The illustration is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-10 17.29.38.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-19 15.45.25.png" width="80%"/>
 </p>
 <p align="center">
-<img src="./screenshot/截屏2024-02-10 17.29.19.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-19 15.16.36.png" width="80%"/>
 </p>
 <p align="center">
 <img src="./screenshot/截屏2024-02-10 17.29.25.png" width="80%"/>
@@ -96,7 +96,7 @@ The illustration is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-10 17.29.31.png" width="80%"/>
 </p>
-The VIFs increase as we add more predictors to a model.
+In the beginning, we have a model with only one predictor `hsgrad`, and the VIF is 1. Then we add one more predictor to the model `logpopdens`, and the VIFs increase only a little to 1.01347. From the Pearson correlation, they have small correlation. And then we add one more predictor to the model `bagrad`, and the VIFs increase a lot to 2.09732. `bagrad` and `hsgrad` have high correlation. The VIFs increase as we add more predictors to a model.
 
 ## Question B.1
 <p align="center">
@@ -109,11 +109,11 @@ The VIFs increase as we add more predictors to a model.
 
 ## Question B.2
 <p align="center">
-<img src="./screenshot/截屏2024-02-11 16.21.33.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-10 17.36.23.png" width="100%"/>
 </p>
 ### Answer:
 <p align="center">
-<img src="./screenshot/截屏2024-02-10 17.36.23.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-11 16.21.33.png" width="100%"/>
 </p>
 
 ## Question B.3
@@ -131,10 +131,10 @@ The VIFs increase as we add more predictors to a model.
 </p>
 ### Answer:
 <p align="center">
-<img src="./screenshot/截屏2024-02-11 16.34.39.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-19 15.42.57.png" width="100%"/>
 </p>
 <p align="center">
-<img src="./screenshot/截屏2024-02-11 16.35.11.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-19 15.43.11.png" width="100%"/>
 </p>
 
 
