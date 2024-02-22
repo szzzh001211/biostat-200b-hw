@@ -1,0 +1,107 @@
+---
+title: "Biostat 200B Homework 6"
+subtitle: Due Feb 28 @ 11:59PM
+author: "Ziheng Zhang_606300061"
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: false    
+---
+## Question 1
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 09.34.30.png" width="100%"/>
+</p>
+### Answer:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 10.39.06.png" width="100%"/>
+</p>
+
+
+## Question 2
+
+For the SENIC data set, consider the model regressing `loglength` on `xray`, `census` and `age`.
+
+a. Plot studentized residual, leverage and Cooks D by id and identify observations that have unusual leverage, residual or Cook's D. You can make three separate plots or produce a “bubble” plot.\
+b. Identify the two hospitals with the highest Cook's D. By examining influence statistics such as leverage and residual, and log(length) and predictor values, can you discover what are the characteristics of these hospitals that make them potentially influential (that is, give them a high Cook’s D)?\
+c. Rather than rely completely on influence measures, it is better to **conduct sensitivity analyses** to see whether our inferences really do depend on one or a few unusual observations. Run the model after dropping these observations. (We are doing this to see what happens. I do not recommend that you automatically drop influential observations! Rather, you need to do an investigation.) How do the results compare to the results when fitting the model to the full data set? Compare regression coef estimates, p-values and root MSE.\
+d. Conduct model diagnostics for the partial relationships in the model using component-plus-residual plots. Decide whether any of the predictors should be transformed to improve the model. Provide the output for your final model.
+
+### Answer:
+**a.**\
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 10.58.18.png" width="100%"/>
+</p>
+
+The leverage plot is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 10.57.28.png" width="100%"/>
+</p>
+**Observations with IDs 104, 112 have high leverage.**
+
+The studentized residual plot is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 10.57.34.png" width="100%"/>
+</p>
+**Observations with ID 47 have high studentized residual.**
+
+The Cook's D plot is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 10.57.40.png" width="100%"/>
+</p>
+**Observations with IDs 47, 112 appear to have high influence. They have Cook's D of 0.23 and 0.18, respectively.**
+
+**b.**\
+Observation with ID 47 has high influence because it has high studentized residual. And after we check its `log(length)` value, we find that it is 2.9735 and it is the maximum among all observations. The distribution of `log(length)` is right-skewed, and this observation is an outlier. This means average length of stay of patients in hospital 47 (in days) is much longer than other hospitals.\
+This is the picture of the `log(length)` distribution:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 11.20.41.png" width="100%"/>
+</p>
+This is the picture of the `log(length)` distribution with ID = 47:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 11.20.08.png" width="100%"/>
+</p>
+
+
+Observation with ID 112 has high influence because it has high leverage. And after we check its three predictors' values (`xray`, `census` and `age`), we find that `census` has extremely high value, 791, and it is the maximum among all observations. The distribution of `census` is right-skewed, and this observation is an outlier. This means average number of patients in hospital 112 per day during study period is much larger than other hospitals.\
+This is the picture of the `census` distribution:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 11.12.05.png" width="100%"/>
+</p>
+This is the picture of the `census` distribution with ID = 112:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 11.18.26.png" width="100%"/>
+</p>
+
+In brief, the two hospitals with the highest Cook's D are busy and crowded.
+
+**c.**\
+ddd
+
+## Question 3
+
+For the SENIC data set, use best subsets selection to select a best model. The outcome variable is `risk`.
+
+a. The pool of candidate predictors is `region`, `beds`, `services`, `medsch`, `xray`, `length` and a new variable created as `nurses`/`census` (nurse/patient ratio).\
+b. Before model selection, log-transform positively skewed predictors.\
+c. Consider Cp, AIC and SBC/BIC to select among models.\
+d. To present your results, make a table listing the top models (about 5-8 models, using your discretion) and the values of their model selection criteria. Briefly describe the results and which model appears to be the “best”.
+
+### Answer:
+
+
