@@ -91,7 +91,30 @@ This is the picture of the `census` distribution with ID = 112:
 In brief, the two hospitals with the highest Cook's D are busy and crowded.
 
 **c.**\
-ddd
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 19.10.18.png" width="100%"/>
+</p>
+
+The results with unusual observations are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 19.08.36.png" width="100%"/>
+</p>
+
+After dropping the two unusual observations, the results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-22 19.07.31.png" width="100%"/>
+</p>
+
+Coefficient of `xray` (**with** unusual observations): $0.00330$, p-value $<0.0001$.\
+Coefficient of `xray` (**without** unusual observations): $0.00283$, p-value $<0.0001$.\
+Coefficient of `census` (**with** unusual observations): $0.00054446$, p-value $<0.0001$.\
+Coefficient of `census` (**without** unusual observations): $0.00045298$, p-value $<0.0001$.\
+Coefficient of `age` (**with** unusual observations): $0.00812$, p-value = $0.0072$.\
+Coefficient of `age` (**without** unusual observations): $0.00578$, p-value = $0.0385$.\
+Root MSE (**with** unusual observations): $0.13975$.\
+Root MSE (**without** unusual observations): $0.12799$.\
+Therefore, coefficient estimates, p-values and root MSE are almost the same. This means our inferences do not depend on one or a few unusual observations.
 
 ## Question 3
 
