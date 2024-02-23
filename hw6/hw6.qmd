@@ -116,6 +116,8 @@ Root MSE (**with** unusual observations): $0.13975$.\
 Root MSE (**without** unusual observations): $0.12799$.\
 Therefore, coefficient estimates, p-values and root MSE are almost the same. This means our inferences do not depend on one or a few unusual observations.
 
+**d.**\
+
 ## Question 3
 
 For the SENIC data set, use best subsets selection to select a best model. The outcome variable is `risk`.
