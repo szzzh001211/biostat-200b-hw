@@ -20,7 +20,7 @@ knitr:
     fig.height: 4
     message: FALSE
 execute:
-  eval: false    
+  eval: true    
 ---
 ## Question 1
 <p align="center">
@@ -28,7 +28,7 @@ execute:
 </p>
 ### Answer:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 10.39.06.png" width="100%"/>
+<img src="./screenshot/WechatIMG716.jpg" width="100%"/>
 </p>
 
 
@@ -45,24 +45,24 @@ d. Conduct model diagnostics for the partial relationships in the model using co
 **a.**\
 The SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 10.58.18.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 10.58.18.png" width="80%"/>
 </p>
 
 The leverage plot is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 10.57.28.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 10.57.28.png" width="80%"/>
 </p>
 **Observations with IDs 104, 112 have high leverage.**
 
 The studentized residual plot is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 10.57.34.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 10.57.34.png" width="80%"/>
 </p>
 **Observations with ID 47 have high studentized residual.**
 
 The Cook's D plot is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 10.57.40.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 10.57.40.png" width="80%"/>
 </p>
 **Observations with IDs 47, 112 appear to have high influence. They have Cook's D of 0.23 and 0.18, respectively.**
 
@@ -70,22 +70,22 @@ The Cook's D plot is as follows:
 Observation with ID 47 has high influence because it has high studentized residual. And after we check its `log(length)` value, we find that it is 2.9735 and it is the maximum among all observations. The distribution of `log(length)` is right-skewed, and this observation is an outlier. This means average length of stay of patients in hospital 47 (in days) is much longer than other hospitals.\
 This is the picture of the `log(length)` distribution:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 11.20.41.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 11.20.41.png" width="80%"/>
 </p>
 This is the picture of the `log(length)` distribution with ID = 47:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 11.20.08.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 11.20.08.png" width="80%"/>
 </p>
 
 
 Observation with ID 112 has high influence because it has high leverage. And after we check its three predictors' values (`xray`, `census` and `age`), we find that `census` has extremely high value, 791, and it is the maximum among all observations. The distribution of `census` is right-skewed, and this observation is an outlier. This means average number of patients in hospital 112 per day during study period is much larger than other hospitals.\
 This is the picture of the `census` distribution:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 11.12.05.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 11.12.05.png" width="80%"/>
 </p>
 This is the picture of the `census` distribution with ID = 112:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 11.18.26.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 11.18.26.png" width="80%"/>
 </p>
 
 In brief, the two hospitals with the highest Cook's D are busy and crowded.
@@ -93,17 +93,17 @@ In brief, the two hospitals with the highest Cook's D are busy and crowded.
 **c.**\
 The SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 19.10.18.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 19.10.18.png" width="80%"/>
 </p>
 
 The results with unusual observations are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 19.08.36.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 19.08.36.png" width="80%"/>
 </p>
 
 After dropping the two unusual observations, the results are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-22 19.07.31.png" width="100%"/>
+<img src="./screenshot/截屏2024-02-22 19.07.31.png" width="80%"/>
 </p>
 
 Coefficient of `xray` (**with** unusual observations): $0.00330$, p-value $<0.0001$.\
@@ -116,7 +116,57 @@ Root MSE (**with** unusual observations): $0.13975$.\
 Root MSE (**without** unusual observations): $0.12799$.\
 Therefore, coefficient estimates, p-values and root MSE are almost the same. This means our inferences do not depend on one or a few unusual observations.
 
-**d.**\
+**d.**
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.14.12.png" width="80%"/>
+</p>
+
+The parameter estimates are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.33.38.png" width="80%"/>
+</p>
+
+The component-plus-residual plot for `age` is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.14.26.png" width="80%"/>
+</p>
+
+The component-plus-residual plot for `xray` is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.14.32.png" width="80%"/>
+</p>
+
+The component-plus-residual plot for `census` is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.14.38.png" width="80%"/>
+</p>
+
+So it seems that `age` does not need to transform, but `xray` and `census` need to transform. It looks like a quadratic polynomial might work for `xray` and we need to go down ladder in x (`census`). So we use a log transformation
+for `census` and a quadratic polynomial for `xray`.
+
+The transformation SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.32.58.png" width="80%"/>
+</p>
+
+The new component-plus-residual plot for `xray` is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.33.06.png" width="80%"/>
+</p>
+
+The new component-plus-residual plot for `census` is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.33.11.png" width="80%"/>
+</p>
+
+These two plots look better than before. So we use the transformed predictors to fit the model and the final model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.33.25.png" width="80%"/>
+</p>
+$$
+log(length) = 1.00948 + 0.11202 \times log(census) + 0.00953 \times age + 0.00115 \times xray + 0.00001223 \times xray^2
+$$
 
 ## Question 3
 
@@ -128,5 +178,50 @@ c. Consider Cp, AIC and SBC/BIC to select among models.\
 d. To present your results, make a table listing the top models (about 5-8 models, using your discretion) and the values of their model selection criteria. Briefly describe the results and which model appears to be the “best”.
 
 ### Answer:
+After creating the new variable `nurses`/`census`, we check the distribution of all predictors. The distribution of `beds`, `length` and `nurses`/`census` is right-skewed, and we log-transform it. The SAS codes and results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 21.57.42.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.55.54.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.56.14.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 20.56.22.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 21.58.33.png" width="80%"/>
+</p>
+
+The result tables are as follows:
+```{r}
+library(kableExtra)
+model_data <- data.frame(
+  ID = c(1, 2, 3, 4, 5, 6),
+  Models = c("regnc regs regw logbeds svcs msch xray loglength lognuratio", 
+             "regnc regw logbeds svcs msch xray loglength lognuratio", 
+             "regw logbeds svcs msch xray loglength lognuratio", 
+             "regw logbeds msch xray loglength lognuratio", 
+             "regw logbeds xray loglength lognuratio", 
+             "logbeds xray loglength lognuratio"),
+  Cp = c(10.0000, 8.0627, 6.1141, 4.2378, paste0(3.3371, "*"), 5.6439),
+  AIC = c(116.3372, 114.4060, 112.4623, 110.5978, paste0(109.7947, "*"), 
+          112.3654),
+  SBC = c(28.6111, 23.9525, 19.2814, 14.6895, 11.1590, paste0(11.0023, "*"))
+)
+kable(model_data, "html") |>
+  kable_styling(full_width = F)
+```
+
+Here we use backward stepwise selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC. In the table, the smallest values are marked with a star. Usually, it should be the same model. But in this case, the smallest Cp and AIC is the fifth model, while the smallest SBC is the sixth model. If we check other metrics, such as BIC and PRESS, we can find that the fifth model is the best model. The best model is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-02-23 21.58.54.png" width="80%"/>
+</p>
+\begin{align*}
+risk &= -6.784094 + 0.613906 \times regw + 0.509132 \times log(beds) + 0.016971 \times xray + \\
+&\quad 3.145076 \times log(length) + 0.853615 \times log(nurses/census)
+\end{align*}
 
 
