@@ -196,7 +196,7 @@ After creating the new variable `nurses`/`census`, we check the distribution of 
 </p>
 
 The result tables are as follows:
-```{r}
+```{r, eval=FALSE}
 library(kableExtra)
 model_data <- data.frame(
   ID = c(1, 2, 3, 4, 5, 6),
@@ -215,6 +215,41 @@ kable(model_data, "html") |>
   kable_styling(full_width = F)
 ```
 
+```{r, eval=TRUE}
+library(kableExtra)
+library(olsrr)
+library(readr)
+library(tidyverse)
+senic_data <- read_csv("/Users/zihengzhang/Downloads/200B/senic.csv")
+senic_transformed <- senic_data |>
+  mutate(nuratio = nurses/census) |> 
+  mutate(logbeds = log(beds), loglength = log(length), 
+         lognuratio = log(nuratio)) |>
+  mutate(region = factor(region)) |>
+  mutate(msch = ifelse(msch == 2, 0, msch)) |>
+  mutate(msch = factor(msch)) |>
+  select(risk, region, logbeds, svcs, msch, xray, loglength, lognuratio)
+
+senic_model <- lm(risk ~ ., data = senic_transformed)
+
+senic_select <- ols_step_all_possible(senic_model)
+
+senic_table <- senic_select$result |>
+  select(predictors, cp, aic, sbc) |>
+  arrange(cp) |> 
+  slice(1:8) |>
+  mutate(id = seq(1, 8, 1)) |>
+  select(id, everything()) |>
+  kable("html") |>
+  kable_styling(full_width = FALSE)
+
+senic_table
+
+summary(lm(risk ~ logbeds + xray + loglength + lognuratio, 
+           data = senic_transformed))
+
+```
+
 Here we use backward stepwise selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC. In the table, the smallest values are marked with a star. Usually, it should be the same model. But in this case, the smallest Cp and AIC is the fifth model, while the smallest SBC is the sixth model. If we check other metrics, such as BIC and PRESS, we can find that the fifth model is the best model. The best model is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-23 21.58.54.png" width="80%"/>
@@ -224,4 +259,8 @@ risk &= -6.784094 + 0.613906 \times regw + 0.509132 \times log(beds) + 0.016971 
 &\quad 3.145076 \times log(length) + 0.853615 \times log(nurses/census)
 \end{align*}
 
+\begin{align*}
+risk &= -5.784931 + 0.509710 \times log(beds) + 0.016694 \times xray + 2.757251 \times log(length) + \\
+&\quad 1.040605 \times log(nurses/census)
+\end{align*}
 
