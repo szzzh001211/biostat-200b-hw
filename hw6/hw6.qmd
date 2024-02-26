@@ -52,21 +52,25 @@ The leverage plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.28.png" width="80%"/>
 </p>
-**Observations with IDs 104, 112 have high leverage.**
+**Observations with IDs 104, 112 have high leverage. The values are 0.1525 and 0.1523, respectively.**
 
 The studentized residual plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.34.png" width="80%"/>
 </p>
-**Observations with ID 47 have high studentized residual.**
+**Observations with ID 47 have high studentized residual and the value is 4.0883.**
 
 The Cook's D plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.40.png" width="80%"/>
 </p>
-**Observations with IDs 47, 112 appear to have high influence. They have Cook's D of 0.23 and 0.18, respectively.**
+**Observations with IDs 47, 112 appear to have high influence. They have Cook's D of 0.2185 and 0.1733, respectively.**
 
 **b.**\
+This is the summary statistics of the `log(length)`, `xray`, `census` and `age`:
+<p align="center">
+<img src="./screenshot/截屏2024-02-25 18.21.03.png" width="80%"/>
+</p>
 Observation with ID 47 has high influence because it has high studentized residual. And after we check its `log(length)` value, we find that it is 2.9735 and it is the maximum among all observations. The distribution of `log(length)` is right-skewed, and this observation is an outlier. This means average length of stay of patients in hospital 47 (in days) is much longer than other hospitals.\
 This is the picture of the `log(length)` distribution:
 <p align="center">
