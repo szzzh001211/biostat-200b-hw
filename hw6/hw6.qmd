@@ -58,7 +58,7 @@ The studentized residual plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.34.png" width="80%"/>
 </p>
-**Observations with ID 47 have high studentized residual and the value is 4.0883.**
+**All the observations with studentized residual larger than 2 or smaller than -2 are unusual. So observations with ID 47 is unusual and it has the highest studentized residual and the value is 4.0883. Observations 33, 43, 54, 112, 26, and 103 are unusual.**
 
 The Cook's D plot is as follows:
 <p align="center">
@@ -150,7 +150,7 @@ So it seems that `age` and `xray` do not need to transform, but `census` need to
 
 The transformation SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-26 19.46.02.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-27 10.46.04.png" width="80%"/>
 </p>
 
 The new component-plus-residual plot for `census` is as follows:
@@ -176,10 +176,8 @@ c. Consider Cp, AIC and SBC/BIC to select among models.\
 d. To present your results, make a table listing the top models (about 5-8 models, using your discretion) and the values of their model selection criteria. Briefly describe the results and which model appears to be the “best”.
 
 ### Answer:
-After creating the new variable `nurses`/`census`, we check the distribution of all predictors. The distribution of `beds`, `length` and `nurses`/`census` is right-skewed, and we log-transform it. The SAS codes and results are as follows:
-<p align="center">
-<img src="./screenshot/截屏2024-02-23 21.57.42.png" width="80%"/>
-</p>
+After creating the new variable `nurses`/`census`, we check the distribution of all predictors. The distribution of `beds`, `length` and `nurses`/`census` is right-skewed, and we log-transform it.
+
 <p align="center">
 <img src="./screenshot/截屏2024-02-23 20.55.54.png" width="80%"/>
 </p>
@@ -189,29 +187,8 @@ After creating the new variable `nurses`/`census`, we check the distribution of 
 <p align="center">
 <img src="./screenshot/截屏2024-02-23 20.56.22.png" width="80%"/>
 </p>
-<p align="center">
-<img src="./screenshot/截屏2024-02-23 21.58.33.png" width="80%"/>
-</p>
 
 The result tables are as follows:
-```{r, eval=FALSE}
-library(kableExtra)
-model_data <- data.frame(
-  ID = c(1, 2, 3, 4, 5, 6),
-  Models = c("regnc regs regw logbeds svcs msch xray loglength lognuratio", 
-             "regnc regw logbeds svcs msch xray loglength lognuratio", 
-             "regw logbeds svcs msch xray loglength lognuratio", 
-             "regw logbeds msch xray loglength lognuratio", 
-             "regw logbeds xray loglength lognuratio", 
-             "logbeds xray loglength lognuratio"),
-  Cp = c(10.0000, 8.0627, 6.1141, 4.2378, paste0(3.3371, "*"), 5.6439),
-  AIC = c(116.3372, 114.4060, 112.4623, 110.5978, paste0(109.7947, "*"), 
-          112.3654),
-  SBC = c(28.6111, 23.9525, 19.2814, 14.6895, 11.1590, paste0(11.0023, "*"))
-)
-kable(model_data, "html") |>
-  kable_styling(full_width = F)
-```
 
 ```{r, eval=TRUE}
 library(kableExtra)
@@ -248,14 +225,7 @@ summary(lm(risk ~ logbeds + xray + loglength + lognuratio,
 
 ```
 
-Here we use backward stepwise selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC. In the table, the smallest values are marked with a star. Usually, it should be the same model. But in this case, the smallest Cp and AIC is the fifth model, while the smallest SBC is the sixth model. If we check other metrics, such as BIC and PRESS, we can find that the fifth model is the best model. The best model is as follows:
-<p align="center">
-<img src="./screenshot/截屏2024-02-23 21.58.54.png" width="80%"/>
-</p>
-\begin{align*}
-risk &= -6.784094 + 0.613906 \times regw + 0.509132 \times log(beds) + 0.016971 \times xray + \\
-&\quad 3.145076 \times log(length) + 0.853615 \times log(nurses/census)
-\end{align*}
+Here we use best subset selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC and we arrange the best 8 models according to Cp. So the first row is the predictors in the best model, `log(beds)`, `xray`, `log(length)` and `log(nurses/census)`. The best model is as follows:
 
 \begin{align*}
 risk &= -5.784931 + 0.509710 \times log(beds) + 0.016694 \times xray + 2.757251 \times log(length) + \\
