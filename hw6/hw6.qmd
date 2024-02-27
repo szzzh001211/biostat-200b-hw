@@ -42,7 +42,7 @@ c. Rather than rely completely on influence measures, it is better to **conduct 
 d. Conduct model diagnostics for the partial relationships in the model using component-plus-residual plots. Decide whether any of the predictors should be transformed to improve the model. Provide the output for your final model.
 
 ### Answer:
-**a.**\
+#### a 
 The SAS codes are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.58.18.png" width="80%"/>
@@ -66,7 +66,7 @@ The Cook's D plot is as follows:
 </p>
 **Observations with IDs 47, 112 appear to have high influence. They have Cook's D of 0.2185 and 0.1733, respectively.**
 
-**b.**\
+#### b
 This is the summary statistics of the `log(length)`, `xray`, `census` and `age`:
 <p align="center">
 <img src="./screenshot/截屏2024-02-25 18.21.03.png" width="80%"/>
@@ -94,7 +94,7 @@ This is the picture of the `census` distribution with ID = 112:
 
 In brief, the two hospitals with the highest Cook's D are busy and crowded.
 
-**c.**\
+#### c
 The SAS codes are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 19.10.18.png" width="80%"/>
@@ -120,7 +120,7 @@ Root MSE (**with** unusual observations): $0.13975$.\
 Root MSE (**without** unusual observations): $0.12799$.\
 Therefore, coefficient estimates, p-values and root MSE are almost the same. This means our inferences do not depend on one or a few unusual observations.
 
-**d.**
+#### d
 The SAS codes are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-23 20.14.12.png" width="80%"/>
@@ -146,30 +146,24 @@ The component-plus-residual plot for `census` is as follows:
 <img src="./screenshot/截屏2024-02-23 20.14.38.png" width="80%"/>
 </p>
 
-So it seems that `age` does not need to transform, but `xray` and `census` need to transform. It looks like a quadratic polynomial might work for `xray` and we need to go down ladder in x (`census`). So we use a log transformation
-for `census` and a quadratic polynomial for `xray`.
+So it seems that `age` and `xray` do not need to transform, but `census` need to transform. We need to go down ladder in x (`census`) so we use a log transformation for `census`.
 
 The transformation SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-23 20.32.58.png" width="80%"/>
-</p>
-
-The new component-plus-residual plot for `xray` is as follows:
-<p align="center">
-<img src="./screenshot/截屏2024-02-23 20.33.06.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-26 19.46.02.png" width="80%"/>
 </p>
 
 The new component-plus-residual plot for `census` is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-23 20.33.11.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-26 19.45.51.png" width="80%"/>
 </p>
 
-These two plots look better than before. So we use the transformed predictors to fit the model and the final model is as follows:
+This plot looks better than before. So we use the transformed predictors to fit the model and the final model is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-02-23 20.33.25.png" width="80%"/>
+<img src="./screenshot/截屏2024-02-26 19.48.31.png" width="80%"/>
 </p>
 $$
-log(length) = 1.00948 + 0.11202 \times log(census) + 0.00953 \times age + 0.00115 \times xray + 0.00001223 \times xray^2
+log(length) = 0.91575 + 0.11325 \times log(census) + 0.00973 \times age + 0.00314 \times xray
 $$
 
 ## Question 3
