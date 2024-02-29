@@ -52,7 +52,7 @@ The leverage plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.28.png" width="80%"/>
 </p>
-**Observations with IDs 104, 112 have high leverage. The values are 0.1525 and 0.1523, respectively.**
+**All the observations with leverage larger than $3\bar{h}$ are unusual. $\bar{h}$ is 0.0354 so $3\bar{h}$ is 0.1062. So observations with IDs 104, 112 have high leverage. The values are 0.1525 and 0.1523, respectively.**
 
 The studentized residual plot is as follows:
 <p align="center">
