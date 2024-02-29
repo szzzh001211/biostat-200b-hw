@@ -1,7 +1,7 @@
 library(haven)
 library(tidyverse)
 rise_data <- read_sas(
-  "/Users/zihengzhang/Downloads/200B/200b-hw/project/rise.sas7bdat") |>
+  "./rise.sas7bdat") |>
   select(-PSS_BL, -ISI_SCORE_BL, -PSQI_BL, -SF36V1_PCS_BL, -SF36V1_MCS_BL, 
          -FSI_SEVERITY_BL) |>
   select(ID, AGE_BL, RACE5, INCOME3, EDUC3, EMPLOY3, MARRIED2, STAGEDX_PG, 

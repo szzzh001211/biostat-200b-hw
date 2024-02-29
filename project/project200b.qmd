@@ -1,0 +1,111 @@
+---
+title: "Biostat 200B Project"
+subtitle: Group 1
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: true    
+---
+
+## Data Preprocessing
+
+```{r}
+library(haven)
+library(tidyverse)
+
+data <- read_sas('./rise.sas7bdat') |>
+  select(-c(ID, PSS_BL, ISI_SCORE_BL, PSQI_BL, SF36V1_PCS_BL, 
+            SF36V1_MCS_BL, FSI_SEVERITY_BL, RACE4, HISPANIC,
+            MFSI_TOT_BL, MAAS_BL, MENOSTATFINAL_BL, AGE_DX)) |>
+  mutate(EMPLOY3 = ifelse(EMPLOY3 == "3 Not employed",
+                       "0 Not employed", "1 Employed"),
+         STAGEDX_PG = ifelse(STAGEDX_PG == 3 | STAGEDX_PG == 8, 
+                             "3 or higher", STAGEDX_PG),
+         SURGTYPE_ENROLLMENT_BINARY = ifelse(SURGTYPE_ENROLLMENT_BINARY == "",
+                                             "no surgery",
+                                             SURGTYPE_ENROLLMENT_BINARY),
+         INCOME3 = ifelse(INCOME3 == "", NA, INCOME3)) |>
+  mutate(MARRIED2 = as.factor(MARRIED2),
+         EDUC3 = as.factor(EDUC3),
+         EMPLOY3 = as.factor(EMPLOY3),
+         INCOME3 = as.factor(INCOME3),
+         CTQ_WALKER_CAT_BL = as.factor(CTQ_WALKER_CAT_BL),
+         STAGEDX_PG = as.factor(STAGEDX_PG),
+         SURGTYPE_ENROLLMENT_BINARY = as.factor(SURGTYPE_ENROLLMENT_BINARY),
+         SCID_PHMDD = as.factor(SCID_PHMDD),
+         RACE5 = as.factor(RACE5),
+         GODIN2 = as.factor(GODIN2),
+         CHARLSON = as.factor(CHARLSON)) |>
+  as_tibble()
+
+# check the distribution of the continuous variable
+hist(data$CESD_BL)
+hist(data$AGE_BL)
+hist(data$ALC_DRINKS_PAST_YEAR)
+hist(data$BMI_BL)
+
+# make transformation to the continuous variable
+hist(log(data$CESD_BL+1))
+hist(log(data$BMI_BL))
+
+
+
+
+processed_data <- data |>
+  mutate(CESD_BL = log(CESD_BL + 1),
+         BMI_BL = log(BMI_BL),
+         ALC_CLASS = case_when(
+           ALC_DRINKS_PAST_YEAR == 0 ~ "Low",
+           ALC_DRINKS_PAST_YEAR > 0 & ALC_DRINKS_PAST_YEAR < 100 ~ "Medium",
+           ALC_DRINKS_PAST_YEAR >= 100 ~ "High")) |> 
+  mutate(ALC_CLASS = as.factor(ALC_CLASS)) |> 
+  select(-ALC_DRINKS_PAST_YEAR, BMI_BL) |>
+  na.omit()
+
+
+```
+
+
+## Model Fitting
+```{r}
+
+variables <- names(processed_data)
+variables <- variables[variables != "CESD_BL"]
+
+
+regression_results <- lapply(variables, function(var) 
+  lm(CESD_BL ~ ., data = processed_data[, c("CESD_BL", var)]))
+
+
+summary_results <- lapply(regression_results, summary)
+
+p_values <- lapply(summary_results, function(summary_result) 
+  summary_result$coefficients[, 4])
+significant_variables <- lapply(p_values, function(p_value) {
+  significant_indices <- which(p_value < 0.05)
+  significant_variables <- names(significant_indices)
+})
+
+
+fit <- lm(CESD_BL ~ RACE5 + SCID_PHMDD + SURGTYPE_ENROLLMENT_BINARY + CHARLSON +
+            CTQ_WALKER_CAT_BL + INCOME3 + AGE_BL, data = processed_data)
+step(fit)
+
+summary(fit)
+
+```
