@@ -58,7 +58,7 @@ The studentized residual plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-02-22 10.57.34.png" width="80%"/>
 </p>
-**All the observations with studentized residual larger than 2 or smaller than -2 are unusual. So observations with ID 47 is unusual and it has the highest studentized residual and the value is 4.0883. Observations 33, 43, 54, 112, 26, and 103 are unusual.**
+**All the observations with studentized residual larger than 2 or smaller than -2 are unusual. So observations with ID 47 is unusual and it has the highest studentized residual and the value is 4.0883. Observations 33, 43, 54, 26, and 103 are unusual.**
 
 The Cook's D plot is as follows:
 <p align="center">
@@ -176,7 +176,7 @@ c. Consider Cp, AIC and SBC/BIC to select among models.\
 d. To present your results, make a table listing the top models (about 5-8 models, using your discretion) and the values of their model selection criteria. Briefly describe the results and which model appears to be the “best”.
 
 ### Answer:
-After creating the new variable `nurses`/`census`, we check the distribution of all predictors. The distribution of `beds`, `length` and `nurses`/`census` is right-skewed, and we log-transform it.
+After creating the new variable `nuratio` = (`nurses`/`census`), we check the distribution of all predictors. The distribution of `beds`, `length` and `nuratio` is right-skewed, and we log-transform it.
 
 <p align="center">
 <img src="./screenshot/截屏2024-02-23 20.55.54.png" width="80%"/>
@@ -225,10 +225,10 @@ summary(lm(risk ~ logbeds + xray + loglength + lognuratio,
 
 ```
 
-Here we use best subset selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC and we arrange the best 8 models according to Cp. So the first row is the predictors in the best model, `log(beds)`, `xray`, `log(length)` and `log(nurses/census)`. The best model is as follows:
+Here we use best subset selection to select the best model. The best model is the one with the smallest Cp, AIC, and SBC and we arrange the best 8 models according to Cp. So the first row is the predictors in the best model, `log(beds)`, `xray`, `log(length)` and `log(nuratio)`. The best model is as follows:
 
 \begin{align*}
 risk &= -5.784931 + 0.509710 \times log(beds) + 0.016694 \times xray + 2.757251 \times log(length) + \\
-&\quad 1.040605 \times log(nurses/census)
+&\quad 1.040605 \times log(nuratio)
 \end{align*}
 
