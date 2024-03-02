@@ -1,0 +1,112 @@
+---
+title: "Biostat 200B Homework 7"
+subtitle: Due Mar 6 @ 11:59PM
+author: "Ziheng Zhang_606300061"
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: true    
+---
+## Question 1
+
+**How do we interpret the parameter estimates in this output? Specifically, how do these parameter estimates relate to the group means?**
+
+### Answer: 
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-01 23.30.41.png" width="80%"/>
+</p>
+
+The parameter estimates and group means are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-01 23.24.48.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-03-01 23.29.06.png" width="80%"/>
+</p>
+
+
+The parameter estimates in these outputs are the differences between the group estimated means and the reference group estimated mean. The reference group is the `Drug G` group.\
+The parameter estimate for `Intercept` is 62.1, which means the estimated mean of the `Drug G` group is 62.1.\
+The parameter estimate for the `Drug A` group is -37.8, which means the estimated mean of the `Drug A` group is 37.8 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{A}} - \hat{\mu}_{\text{G}} = 24.3 - 62.1 = -37.8$.\
+The parameter estimate for the `Drug D` group is -20.9, which means the estimated mean of the `Drug D` group is 20.9 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{D}} - \hat{\mu}_{\text{G}} = 41.2 - 62.1 = -20.9$.\
+The parameter estimate for the `Drug G` group is 0, because the reference group is `Drug G`. $\hat{\mu}_{\text{G}} - \hat{\mu}_{\text{G}} = 62.1 - 62.1 = 0$.\
+
+## Question 2
+
+**Where in the plots do you see evidence of violation of the homogeneity of variance assumption?**
+
+### Answer:
+
+
+## Question 3
+
+**Write code and estimate the pairwise contrasts between the youngest age group and each other age group. Use an appropriate method to control for multiple comparisons.**
+
+### Answer:
+
+
+
+
+## Question 4
+
+**Use orthogonal polynomial contrasts to test for a linear, quadratic and cubic trend. What do you conclude?**
+
+### Answer:
+
+
+
+## Question 5
+
+**Remove the last (oldest) group so that there are now 4 age groups. Determine the appropriate orthogonal polynomial contrasts to test for a linear and quadratic trend with 4 groups. Test the contrasts. What do you conclude?**
+
+### Answer:
+
+
+
+## Question 6
+<p align="center">
+<img src="./screenshot/截屏2024-03-01 22.15.01.png" width="100%"/>
+</p>
+
+### Answer:
+
+
+
+## Question 7
+<p align="center">
+<img src="./screenshot/截屏2024-03-01 22.15.31.png" width="100%"/>
+</p>
+
+### Answer:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
