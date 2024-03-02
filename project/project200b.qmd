@@ -27,6 +27,10 @@ execute:
 ```{r}
 library(haven)
 library(tidyverse)
+library(gtsummary)
+library(knitr)
+library(kableExtra)
+library(broom)
 
 data <- read_sas('./rise.sas7bdat') |>
   select(-c(ID, PSS_BL, ISI_SCORE_BL, PSQI_BL, SF36V1_PCS_BL, 
@@ -64,8 +68,6 @@ hist(log(data$CESD_BL+1))
 hist(log(data$BMI_BL))
 
 
-
-
 processed_data <- data |>
   mutate(CESD_BL = log(CESD_BL + 1),
          BMI_BL = log(BMI_BL),
@@ -74,9 +76,10 @@ processed_data <- data |>
            ALC_DRINKS_PAST_YEAR > 0 & ALC_DRINKS_PAST_YEAR < 100 ~ "Medium",
            ALC_DRINKS_PAST_YEAR >= 100 ~ "High")) |> 
   mutate(ALC_CLASS = as.factor(ALC_CLASS)) |> 
-  select(-ALC_DRINKS_PAST_YEAR, BMI_BL) |>
+  select(-ALC_DRINKS_PAST_YEAR) |>
   na.omit()
 
+tbl_summary(processed_data)
 
 ```
 
@@ -87,25 +90,51 @@ processed_data <- data |>
 variables <- names(processed_data)
 variables <- variables[variables != "CESD_BL"]
 
-
+# univariate regression
 regression_results <- lapply(variables, function(var) 
   lm(CESD_BL ~ ., data = processed_data[, c("CESD_BL", var)]))
 
 
 summary_results <- lapply(regression_results, summary)
 
-p_values <- lapply(summary_results, function(summary_result) 
-  summary_result$coefficients[, 4])
-significant_variables <- lapply(p_values, function(p_value) {
-  significant_indices <- which(p_value < 0.05)
-  significant_variables <- names(significant_indices)
-})
+p_values <- lapply(summary_results, function(summary_result) {
+  f_statistic <- summary_result$fstatistic
+  p_value <- pf(f_statistic[1], f_statistic[2], f_statistic[3], 
+                lower.tail = FALSE)
+  return(p_value)
+}) |> unlist()
+
+# selected results
+detailed_label<-c("Leisure-time exercise", "Age", "Partnered status", 
+                  "Education", "Employment", "Annual income", 
+                  "Childhood maltreatment", "Charlson comorbidity", 
+                  "Cancer stage at diagnosis", 
+                  "Breast cancer surgery type before enrollment in study", 
+                  "Past history of depression", "BMI", "Race", 
+                  "Alcohol use level")
+p_values_tibble <- tibble(
+  Variable = variables,
+  Index = detailed_label,
+  P_Value = format(p_values, scientific = FALSE, digits = 5)
+) |> 
+  mutate(Selected = ifelse(P_Value < 0.1, "Y", "N"))
+
+p_values_tibble |>
+  kable("html") |>
+  kable_styling(full_width = F)
 
 
-fit <- lm(CESD_BL ~ RACE5 + SCID_PHMDD + SURGTYPE_ENROLLMENT_BINARY + CHARLSON +
-            CTQ_WALKER_CAT_BL + INCOME3 + AGE_BL, data = processed_data)
-step(fit)
+fit <- lm(CESD_BL ~ AGE_BL + INCOME3 + CTQ_WALKER_CAT_BL + CHARLSON + 
+            SURGTYPE_ENROLLMENT_BINARY + SCID_PHMDD + RACE5, 
+          data = processed_data)
 
-summary(fit)
+rsquared <- summary(fit)$r.squared
+tidy_results <- tidy(fit)
+
+tidy_results$rsquared <- rsquared
+
+tidy_results |> 
+  kable("html") |>
+  kable_styling(full_width = F)
 
 ```
