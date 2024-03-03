@@ -42,16 +42,28 @@ The parameter estimates and group means are as follows:
 
 
 The parameter estimates in these outputs are the differences between the group estimated means and the reference group estimated mean. The reference group is the `Drug G` group.\
-The parameter estimate for `Intercept` is 62.1, which means the estimated mean of the `Drug G` group is 62.1.\
-The parameter estimate for the `Drug A` group is -37.8, which means the estimated mean of the `Drug A` group is 37.8 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{A}} - \hat{\mu}_{\text{G}} = 24.3 - 62.1 = -37.8$.\
-The parameter estimate for the `Drug D` group is -20.9, which means the estimated mean of the `Drug D` group is 20.9 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{D}} - \hat{\mu}_{\text{G}} = 41.2 - 62.1 = -20.9$.\
-The parameter estimate for the `Drug G` group is 0, because the reference group is `Drug G`. $\hat{\mu}_{\text{G}} - \hat{\mu}_{\text{G}} = 62.1 - 62.1 = 0$.\
+The parameter estimate for `Intercept` is $62.1$, which means the estimated mean of the `Drug G` group is 62.1.\
+The parameter estimate for the `Drug A` group is $-37.8$, which means the estimated mean of the `Drug A` group is 37.8 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{A}} - \hat{\mu}_{\text{G}} = 24.3 - 62.1 = -37.8$.\
+The parameter estimate for the `Drug D` group is $-20.9$, which means the estimated mean of the `Drug D` group is 20.9 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{D}} - \hat{\mu}_{\text{G}} = 41.2 - 62.1 = -20.9$.\
+The parameter estimate for the `Drug G` group is $0$, because the reference group is `Drug G`. $\hat{\mu}_{\text{G}} - \hat{\mu}_{\text{G}} = 62.1 - 62.1 = 0$.\
 
 ## Question 2
 
 **Where in the plots do you see evidence of violation of the homogeneity of variance assumption?**
 
-### Answer:
+### Answer: 
+The distribution of of `smell` for each age group is as follow:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 15.53.40.png" width="80%"/>
+</p>
+
+From the boxplots we can see that the variance of `smell` for the `oldest` group is much larger than the variance of `smell` for the other four age group because the length of the box is the variance of the `smell` for each age group and the length of the box for the `oldest` group is much larger than the length of the box for the other four age group. This is evidence of violation of the homogeneity of variance assumption.
+
+The results for the Levene's test for homogeneity of variance are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 16.33.23.png" width="80%"/>
+</p>
+The F-test value is $6.35$ and the p-value is $<0.0001$, which means the variance of `smell` for the five age groups are not equal. This is evidence of violation of the homogeneity of variance assumption.
 
 
 ## Question 3
@@ -59,25 +71,57 @@ The parameter estimate for the `Drug G` group is 0, because the reference group 
 **Write code and estimate the pairwise contrasts between the youngest age group and each other age group. Use an appropriate method to control for multiple comparisons.**
 
 ### Answer:
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 16.21.56.png" width="80%"/>
+</p>
 
-
-
+The estimated contrasts are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 16.22.02.png" width="80%"/>
+</p>
+For the `Youngest vs. AGE Group 2` contrast, the F-test value is $0.46$ and the p-value is $0.4989$, which means the youngest age group and the second age group do not have a significant difference in sense of smell.\
+For the `Youngest vs. AGE Group 3` contrast, the F-test value is $0.05$ and the p-value is $0.8256$, which means the youngest age group and the third age group do not have a significant difference in sense of smell.\
+For the `Youngest vs. AGE Group 4` contrast, the F-test value is $8.42$ and the p-value is $0.0042$, which means the youngest age group and the fourth age group have a significant difference in sense of smell.\
+For the `Youngest vs. AGE Group 5` contrast, the F-test value is $41.12$ and the p-value is $<0.0001$, which means the youngest age group and the fifth age group have a significant difference in sense of smell.
 
 ## Question 4
 
 **Use orthogonal polynomial contrasts to test for a linear, quadratic and cubic trend. What do you conclude?**
 
 ### Answer:
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 16.44.42.png" width="80%"/>
+</p>
 
+The results for the orthogonal polynomial contrasts are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 16.44.52.png" width="80%"/>
+</p>
 
+The F-test value for the linear trend is $53.70$ and the p-value is $<0.0001$, which means there is a significant linear trend in the sense of smell for the five age groups.\
+The F-test value for the quadratic trend is $11.58$ and the p-value is $0.0008$, which means there is a significant quadratic trend in the sense of smell for the five age groups.\
+The F-test value for the cubic trend is $0.12$ and the p-value is $0.7335$, which means there is no significant cubic trend in the sense of smell for the five age groups.
 
 ## Question 5
 
 **Remove the last (oldest) group so that there are now 4 age groups. Determine the appropriate orthogonal polynomial contrasts to test for a linear and quadratic trend with 4 groups. Test the contrasts. What do you conclude?**
 
 ### Answer:
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 17.02.58.png" width="80%"/>
+</p>
 
+The results for the orthogonal polynomial contrasts are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-02 17.03.04.png" width="80%"/>
+</p>
 
+The F-test value for the linear trend is $12.22$ and the p-value is $0.0006$, which means there is a significant linear trend in the sense of smell for the four age groups.\
+The F-test value for the quadratic trend is $6.07$ and the p-value is $0.0150$, which means there is a significant quadratic trend in the sense of smell for the four age groups.\
+For linear and quadratic trends, both five age groups and four age groups are significant, which means for the sense of smell, the linear and quadratic trends are significant for all ages.
 
 ## Question 6
 <p align="center">
@@ -85,8 +129,9 @@ The parameter estimate for the `Drug G` group is 0, because the reference group 
 </p>
 
 ### Answer:
-
-
+<p align="center">
+<img src="./screenshot/WechatIMG743.jpg" width="100%"/>
+</p>
 
 ## Question 7
 <p align="center">
@@ -94,6 +139,9 @@ The parameter estimate for the `Drug G` group is 0, because the reference group 
 </p>
 
 ### Answer:
+<p align="center">
+<img src="./screenshot/WechatIMG744.jpg" width="100%"/>
+</p>
 
 
 
