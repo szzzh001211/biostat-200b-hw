@@ -53,8 +53,7 @@ data <- read_sas('./rise.sas7bdat') |>
          SURGTYPE_ENROLLMENT_BINARY = as.factor(SURGTYPE_ENROLLMENT_BINARY),
          SCID_PHMDD = as.factor(SCID_PHMDD),
          RACE5 = as.factor(RACE5),
-         GODIN2 = as.factor(GODIN2),
-         CHARLSON = as.factor(CHARLSON)) |>
+         GODIN2 = as.factor(GODIN2)) |>
   as_tibble()
 
 # check the distribution of the continuous variable
@@ -62,6 +61,7 @@ hist(data$CESD_BL)
 hist(data$AGE_BL)
 hist(data$ALC_DRINKS_PAST_YEAR)
 hist(data$BMI_BL)
+hist(data$CHARLSON)
 
 # make transformation to the continuous variable
 hist(log(data$CESD_BL+1))
@@ -72,9 +72,10 @@ processed_data <- data |>
   mutate(CESD_BL = log(CESD_BL + 1),
          BMI_BL = log(BMI_BL),
          ALC_CLASS = case_when(
-           ALC_DRINKS_PAST_YEAR == 0 ~ "Low",
-           ALC_DRINKS_PAST_YEAR > 0 & ALC_DRINKS_PAST_YEAR < 100 ~ "Medium",
-           ALC_DRINKS_PAST_YEAR >= 100 ~ "High")) |> 
+           ALC_DRINKS_PAST_YEAR == 0 ~ "No Drink",
+           ALC_DRINKS_PAST_YEAR > 0 & ALC_DRINKS_PAST_YEAR < 100 ~ 
+             "Moderate Drink",
+           ALC_DRINKS_PAST_YEAR >= 100 ~ "Heavy Drink")) |> 
   mutate(ALC_CLASS = as.factor(ALC_CLASS)) |> 
   select(-ALC_DRINKS_PAST_YEAR) |>
   na.omit()
