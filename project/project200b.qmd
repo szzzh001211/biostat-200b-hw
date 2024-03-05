@@ -139,3 +139,15 @@ tidy_results |>
   kable_styling(full_width = F)
 
 ```
+##Introduction: 
+Fatigue, as quantified by the Center for Epidemiological Studies Depression Scale, is one of the most common and neglected side effects of cancer and its treatment. It will lead to negative consequences for patients and their families, and may even affect treatment compliance and efficacy (1: original ariticle).\
+The Center for Epidemiological Studies Depression Scale (CES-D) is recognized as a relatively common measure for assessing depressive symptom in women during cancer treatment (2); however, there have been only a few studies examining factors associated with fatigue before treatement (2: Measurement of depressive symptoms in cancer patients: Evaluation of the center for epidemiological studies depression scale).\
+CESD_BL may be associated with biobehavioral factors which can contribute to identifying patients who are susceptible or at risk, thus enabling them to receive assistance through targeted intervention before adjuvant treatment.
+
+##Objective:
+Assess the relationship between CESD_BL (Center for Epidemiological Studies Depression Scale) and biobehavioral risk variables in women with early-stage breast cancer before they receive adjuvant therapy.\
+Identify which variables explain changes in CESD_BL in this population and which are interesting for further study and targeted intervention.
+
+
+
+
