@@ -73,17 +73,17 @@ The F-test value is $6.35$ and the p-value is $<0.0001$, which means the varianc
 ### Answer:
 The SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-02 16.21.56.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-06 16.06.40.png" width="80%"/>
 </p>
 
-The estimated contrasts are as follows:
+The estimated contrasts results are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-02 16.22.02.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-06 16.06.30.png" width="80%"/>
 </p>
-For the `Youngest vs. AGE Group 2` contrast, the F-test value is $0.46$ and the p-value is $0.4989$, which means the youngest age group and the second age group do not have a significant difference in sense of smell.\
-For the `Youngest vs. AGE Group 3` contrast, the F-test value is $0.05$ and the p-value is $0.8256$, which means the youngest age group and the third age group do not have a significant difference in sense of smell.\
-For the `Youngest vs. AGE Group 4` contrast, the F-test value is $8.42$ and the p-value is $0.0042$, which means the youngest age group and the fourth age group have a significant difference in sense of smell.\
-For the `Youngest vs. AGE Group 5` contrast, the F-test value is $41.12$ and the p-value is $<0.0001$, which means the youngest age group and the fifth age group have a significant difference in sense of smell.
+From the results, we can see the $95\%$ confidence limits for the `Youngest vs. AGE Group 4` and the `Youngest vs. AGE Group 5` have only negative values and $0$ is not included in the confidence limits, which means the youngest age group and the fourth age group has a significant difference in sense of smell, and the youngest age group and the fifth age group has a significant difference in sense of smell.
+
+The $95\%$ confidence limits for the `Youngest vs. AGE Group 2` and the `Youngest vs. AGE Group 3` have both positive and negative values and $0$ is included in the confidence limits, which means the youngest age group and the second age group has no significant difference in sense of smell, and the youngest age group and the third age group has no significant difference in sense of smell.
+
 
 ## Question 4
 
