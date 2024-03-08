@@ -1,0 +1,340 @@
+---
+title: "Biostat 200B Project"
+subtitle: Group 1
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: true    
+---
+
+## Data Preprocessing
+
+```{r}
+#| eval: true
+
+library(haven)
+library(tidyverse)
+library(gtsummary)
+library(knitr)
+library(kableExtra)
+library(broom)
+library(ggplot2)
+library(car)
+
+data <- read_sas('./rise.sas7bdat') |>
+  select(-c(ID, PSS_BL, ISI_SCORE_BL, PSQI_BL, SF36V1_PCS_BL, 
+            SF36V1_MCS_BL, FSI_SEVERITY_BL, RACE4, HISPANIC,
+            MFSI_TOT_BL, MAAS_BL, MENOSTATFINAL_BL, AGE_DX)) |>
+  mutate(EMPLOY3 = ifelse(EMPLOY3 == "3 Not employed",
+                       "0 Not employed", "1 Employed"),
+         STAGEDX_PG = ifelse(STAGEDX_PG == 3 | STAGEDX_PG == 8, 
+                             "3 or higher", STAGEDX_PG),
+         SURGTYPE_ENROLLMENT_BINARY = ifelse(SURGTYPE_ENROLLMENT_BINARY == "",
+                                             "no surgery",
+                                             SURGTYPE_ENROLLMENT_BINARY),
+         INCOME3 = ifelse(INCOME3 == "", NA, INCOME3)) |>
+  mutate(MARRIED2 = as.factor(MARRIED2),
+         EDUC3 = as.factor(EDUC3),
+         EMPLOY3 = as.factor(EMPLOY3),
+         INCOME3 = as.factor(INCOME3),
+         CTQ_WALKER_CAT_BL = as.factor(CTQ_WALKER_CAT_BL),
+         STAGEDX_PG = as.factor(STAGEDX_PG),
+         SURGTYPE_ENROLLMENT_BINARY = as.factor(SURGTYPE_ENROLLMENT_BINARY),
+         SCID_PHMDD = as.factor(SCID_PHMDD),
+         RACE5 = as.factor(RACE5),
+         GODIN2 = as.factor(GODIN2)) |>
+  as_tibble()
+
+# check the distribution of the continuous variable
+hist(data$CESD_BL)
+hist(data$AGE_BL)
+hist(data$ALC_DRINKS_PAST_YEAR)
+hist(data$BMI_BL)
+hist(data$CHARLSON)
+
+# make transformation to the continuous variable
+hist(log(data$CESD_BL+1))
+hist(log(data$BMI_BL))
+
+
+processed_data <- data |>
+  mutate(#CESD_BL = log(CESD_BL + 1),
+         BMI_BL = log(BMI_BL),
+         SURGTYPE_ENROLLMENT_BINARY = relevel(SURGTYPE_ENROLLMENT_BINARY,
+                                              ref = "no surgery"),
+         ALC_CLASS = case_when(
+           ALC_DRINKS_PAST_YEAR == 0 ~ "No Drink",
+           ALC_DRINKS_PAST_YEAR > 0 & ALC_DRINKS_PAST_YEAR < 100 ~ 
+             "Moderate Drink",
+           ALC_DRINKS_PAST_YEAR >= 100 ~ "Heavy Drink"),
+         ALC_CLASS = factor(ALC_CLASS, ordered = FALSE),
+         ALC_CLASS = relevel(ALC_CLASS, ref = "No Drink")) |> 
+  mutate(ALC_CLASS = as.factor(ALC_CLASS)) |> 
+  select(-ALC_DRINKS_PAST_YEAR) |>
+  na.omit()
+
+tbl_summary(processed_data)
+
+```
+
+## Bivariate Regression
+```{r}
+#| eval: true
+
+variables <- names(processed_data)
+variables <- variables[variables != "CESD_BL"]
+
+# univariate regression
+regression_results <- lapply(variables, function(var) 
+  lm(CESD_BL ~ ., data = processed_data[, c("CESD_BL", var)]))
+
+
+summary_results <- lapply(regression_results, summary)
+
+p_values <- lapply(summary_results, function(summary_result) {
+  f_statistic <- summary_result$fstatistic
+  p_value <- pf(f_statistic[1], f_statistic[2], f_statistic[3], 
+                lower.tail = FALSE)
+  return(p_value)
+}) |> unlist()
+
+# selected results
+detailed_label<-c("Leisure-time exercise", "Age", "Partnered status", 
+                  "Education", "Employment", "Annual income", 
+                  "Childhood maltreatment", "Charlson comorbidity", 
+                  "Cancer stage at diagnosis", 
+                  "Breast cancer surgery type before enrollment in study", 
+                  "Past history of depression", "BMI", "Race", 
+                  "Alcohol use level")
+p_values_tibble <- tibble(
+  Variable = variables,
+  Index = detailed_label,
+  P_Value = format(p_values, scientific = FALSE, digits = 5)
+) |> 
+  mutate(Selected = ifelse(P_Value < 0.1, "Y", "N"))
+
+p_values_tibble |>
+  kable("html") |>
+  kable_styling(full_width = F)
+```
+
+## Fit the Model
+```{r}
+#| eval: true
+
+fit1 <- lm(CESD_BL ~ AGE_BL + INCOME3 + CTQ_WALKER_CAT_BL + CHARLSON + 
+            SURGTYPE_ENROLLMENT_BINARY + SCID_PHMDD + ALC_CLASS, 
+          data = processed_data)
+summary(fit1)
+```
+
+## Model Diagnose
+```{r}
+#| eval: true
+
+ggplot() +
+  geom_point(mapping = aes(x = predict(fit1, data = processed_data),
+                           y = residuals(fit1))) +
+  geom_smooth(mapping = aes(x = predict(fit1, data = processed_data),
+                           y = residuals(fit1))) +
+  theme_bw() +
+  labs(title = "Residual Plot", x = "Predicted Value", y = "Residual")
+```
+
+```{r}
+#| eval: true
+
+qqnorm(residuals(fit1))
+```
+
+## Considering nonlinearity on AGE
+
+```{r}
+cpr <- tibble(age = processed_data$AGE_BL,
+              component = processed_data$AGE_BL*coef(fit1)[["AGE_BL"]],
+              r = residuals(fit1))
+cpr$plus <- cpr$component+cpr$r
+
+ggplot(data = cpr) +
+  geom_smooth(mapping = aes(y = plus, x = age)) +
+  geom_point(mapping = aes(y = plus, x = age)) +
+  geom_abline(intercept = 0,
+              slope = coef(fit1)[["AGE_BL"]],
+              color = "red") +
+  theme_bw()
+```
+
+
+
+```{r}
+#| eval: true
+
+# Consider quadratic
+
+fit2 <- lm(CESD_BL ~  I(AGE_BL^2) + AGE_BL +
+             INCOME3 + CTQ_WALKER_CAT_BL + CHARLSON + 
+            SURGTYPE_ENROLLMENT_BINARY + SCID_PHMDD + ALC_CLASS,
+          data = processed_data)
+summary(fit2)
+kable(tidy(fit2), format = "markdown", digits = 3)
+```
+
+## After quadratic polynomial
+
+```{r}
+cpr2 <- tibble(age = processed_data$AGE_BL,
+              component = processed_data$AGE_BL * coef(fit2)[["AGE_BL"]] +
+                processed_data$AGE_BL^2*coef(fit2)[["I(AGE_BL^2)"]],
+              r = residuals(fit2))
+cpr2$plus <- cpr2$component+cpr2$r
+
+quadratic_function <- function(x) {
+  return(coef(fit2)[["I(AGE_BL^2)"]]*x^2 + coef(fit2)[["AGE_BL"]]*x)
+}
+
+ggplot(data = cpr2) +
+  geom_smooth(mapping = aes(y = plus, x = age)) +
+  geom_point(mapping = aes(y = plus, x = age)) +
+  geom_function(fun = quadratic_function, color = "red") +
+  theme_bw()
+```
+
+## Look at influential points
+
+```{r}
+#| eval: true
+student_residuals <- rstudent(fit2)
+high_student_residuals <- which(abs(student_residuals) > 2.5)
+influencePlot(fit2, fill.col = carPalette("skyblue"), fill.alpha = 0.3)
+```
+```{r}
+# Remove high influential points
+
+filterdata <- processed_data[-c(13,68,105,151,170,193,198),]
+```
+
+```{r}
+fit3 <- lm(CESD_BL ~  I(AGE_BL^2) + AGE_BL +
+             INCOME3 + CTQ_WALKER_CAT_BL + CHARLSON + 
+            SURGTYPE_ENROLLMENT_BINARY + SCID_PHMDD + ALC_CLASS,
+          data = filterdata)
+summary(fit3)
+```
+```{r}
+
+cpr3 <- tibble(age = filterdata$AGE_BL,
+              component = 
+                filterdata$AGE_BL^2*coef(fit3)[["I(AGE_BL^2)"]] +
+                filterdata$AGE_BL*coef(fit3)[["AGE_BL"]],
+              r = residuals(fit3))
+cpr3$plus <- cpr3$component+cpr3$r
+
+quadratic_function <- function(x) {
+  return(coef(fit3)[["I(AGE_BL^2)"]]*x^2 + coef(fit3)[["AGE_BL"]] * x)
+}
+
+ggplot(data = cpr3) +
+  geom_smooth(mapping = aes(y = plus, x = age)) +
+  geom_point(mapping = aes(y = plus, x = age)) +
+  geom_function(fun = quadratic_function, color = "red") +
+  theme_bw()
+```
+```{r}
+plot(fit3)
+```
+
+
+## Plot for Poster
+```{r}
+plot1 <- ggplot(processed_data) +
+  geom_boxplot(mapping = aes(x = CTQ_WALKER_CAT_BL, y = CESD_BL), fill = "#F2B600") +
+  theme_bw() +
+  labs(x = "Childhood Maltreatment", y = "CES-D Score") +
+  theme(text = element_text(size = 16))
+
+plot2 <- ggplot(processed_data) +
+  geom_boxplot(mapping = aes(x = INCOME3, y = CESD_BL), fill = "#F2B600") +
+  theme_bw() +
+  labs(x = "Annual Income", y = "CES-D Score") +
+  theme(text = element_text(size = 16))
+
+plot3 <- ggplot(processed_data) +
+  geom_boxplot(mapping = aes(x = factor(SCID_PHMDD, labels = c("No", "Yes")),
+                             y = CESD_BL), fill = "#0E7BB3") +
+  theme_bw() +
+  labs(x = "History of Depression", y = "CES-D Score") +
+  theme(text = element_text(size = 16))
+
+plot4 <- ggplot(processed_data) +
+  geom_boxplot(mapping = aes(x = SURGTYPE_ENROLLMENT_BINARY,
+                             y = CESD_BL), fill = "#0E7BB3") +
+  theme_bw() +
+  labs(x = "Surgery before Enrollment", y = "CES-D Score") +
+  theme(text = element_text(size = 16))
+```
+
+## Plot for poster
+```{r}
+ggplot(data = cpr) +
+  geom_smooth(mapping = aes(y = plus, x = age)) +
+  geom_point(mapping = aes(y = plus, x = age)) +
+  geom_abline(intercept = 0,
+              slope = coef(fit1)[["AGE_BL"]],
+              color = "red") +
+  theme_bw() +
+  labs(y = "Component + Residual", x = "Age (Years)") +
+  theme(text = element_text(size = 24))
+
+
+ggplot(data = cpr2) +
+  geom_smooth(mapping = aes(y = plus, x = age)) +
+  geom_point(mapping = aes(y = plus, x = age)) +
+  geom_function(fun = quadratic_function, color = "red") +
+  #theme() +
+  labs(y = "Component + Residual", x = "Age (Years)") +
+  theme_bw() +
+  theme(text = element_text(size = 24))
+
+ggplot() +
+  geom_point(mapping = aes(x = predict(fit2, data = processed_data),
+                           y = residuals(fit2))) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  theme_bw() +
+  labs(x = "Predicted Value", y = "Residual") +
+  theme(text = element_text(size = 24))
+
+r <- as_tibble(residuals(fit2))
+ggplot(data = r, aes(sample = value)) +
+  stat_qq() +
+  geom_qq_line(color = "red", linetype = "dashed") +
+  labs(x = "Theoretical Quantiles", y = "Observed Quantiles") +
+  theme_bw() +
+  theme(text = element_text(size = 24))
+
+ggplot(data = processed_data) +
+  geom_histogram(mapping = aes(x = CESD_BL), binwidth = 4, color = "white",
+                 fill = "#0E7BB3") +
+  theme_bw() +
+  labs(y = "Count", x = "CES-D Score") +
+  theme(text = element_text(size = 24))
+
+```
+
+
+
+

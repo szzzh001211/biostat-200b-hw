@@ -45,8 +45,7 @@ The parameter estimates in these outputs are the differences between the group e
 The parameter estimate for `Intercept` is $62.1$, which means the estimated mean of the response variable for the `Drug G` group is 62.1.\
 The parameter estimate for the `Drug A` group is $-37.8$, which means the estimated mean of the response variable for the `Drug A` group is 37.8 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{A}} - \hat{\mu}_{\text{G}} = 24.3 - 62.1 = -37.8$.\
 The parameter estimate for the `Drug D` group is $-20.9$, which means the estimated mean of the response variable for the `Drug D` group is 20.9 lower than the estimated mean of the `Drug G` group. $\hat{\mu}_{\text{D}} - \hat{\mu}_{\text{G}} = 41.2 - 62.1 = -20.9$.\
-The parameter estimate for the `Drug G` group is $0$, because the reference group is `Drug G`. $\hat{\mu}_{\text{G}} - \hat{\mu}_{\text{G}} = 62.1 - 62.1 = 0$.\
-And this is also because that this model will be overparameterized if we include the `Drug G` group in the model. So SAS will automatically drop the last group, the `Drug G` group.
+The parameter estimate for the `Drug G` group is $0$, because the reference group is `Drug G`. $\hat{\mu}_{\text{G}} - \hat{\mu}_{\text{G}} = 62.1 - 62.1 = 0$. And this may be also because that this model will be overparameterized if we include the `Drug G` group in the model. So SAS will automatically drop the last group, the `Drug G` group.
 
 ## Question 2
 
