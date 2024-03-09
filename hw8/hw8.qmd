@@ -1,0 +1,89 @@
+---
+title: "Biostat 200B Homework 8"
+subtitle: Due Mar 15 @ 11:59PM
+author: "Ziheng Zhang_606300061"
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+knitr:
+  opts_chunk: 
+    cache: false    
+    echo: true
+    fig.align: 'center'
+    fig.width: 6
+    fig.height: 4
+    message: FALSE
+execute:
+  eval: true    
+---
+## Question 1
+
+**What differences do you see in the relationships between the SS for A, B and A$*$B for balanced versus unbalanced data?**
+
+### Answer: 
+Type III SS are SSA, SSB and SSAB are the sums of squares used for testing the null hypotheses that there is no effect of factor A, factor B, or no interaction. These SS are for comparing models with and without that factor (or the interaction).\
+Type I SS are sequential; they test for an incremental effect when the term is added to a model including the terms above it.
+
+The results for balanced data are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-08 16.39.58.png" width="80%"/>
+</p>
+In balanced data, where the cell sizes are equal, the Type I and Type III SS are identical. This is because the factors are uncorrelated predictors. So we can estimate the factor effects independently of one another and estimating the effects of each factor independently yields the same results as estimating them simultaneously in the presence of other factors.
+
+The results for unbalanced data are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-08 16.40.06.png" width="80%"/>
+</p>
+In unbalanced data, where the cell sizes are unequal, the Type I and Type III SS are different. This is because the factors are correlated predictors. Type I SS can vary depending on the order of entry of terms and may not provide a reliable assessment of each factor's significance.
+Type III SS provide a more reliable assessment of each factor's significance and the interaction term, as they compare models with and without each factor (or the interaction), independent of the order of entry of terms.
+
+
+## Question 2
+
+**For the balanced and unbalanced data, provide a 2 x 3 table of cell means. By hand, compute the (unadjusted) factor means and least square (adjusted) means for each data set.**
+
+### Answer: 
+
+
+
+## Question 3
+
+**Write code and estimate the contrast for comparing the difference between auditory and visual when elapse time is 10 sec to the difference between auditory and visual when elapse time is 15 sec.**
+
+### Answer:
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-08 17.18.53.png" width="80%"/>
+</p>
+
+The constrast estimate result is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-08 17.18.47.png" width="80%"/>
+</p>
+
+The contrast estimate is $5.33*10^{-6}$, which is very close to 0. The F-statistic is 0.02, and the p-value is 0.8943. The p-value is greater than 0.05, so we fail to reject the null hypothesis that the difference between auditory and visual when elapse time is 10 sec is equal to the difference between auditory and visual when elapse time is 15 sec and conclude that there is no significant difference between the two differences.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
