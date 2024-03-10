@@ -59,18 +59,123 @@ Type III SS provide a more reliable assessment of each factor's significance and
 ### Answer:
 The SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-08 17.18.53.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-10 15.21.50.png" width="80%"/>
 </p>
 
 The constrast estimate result is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-08 17.18.47.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-10 15.21.57.png" width="80%"/>
 </p>
 
-The contrast estimate is $5.33*10^{-6}$, which is very close to 0. The F-statistic is 0.02, and the p-value is 0.8943. The p-value is greater than 0.05, so we fail to reject the null hypothesis that the difference between auditory and visual when elapse time is 10 sec is equal to the difference between auditory and visual when elapse time is 15 sec and conclude that there is no significant difference between the two differences.
+The contrast estimate is $0.00057408$, which is close to 0. The F-statistic is $1.98$, and the p-value is $0.1843$. The p-value is greater than 0.05, so we fail to reject the null hypothesis that the difference between auditory and visual when elapse time is 10 sec is equal to the difference between auditory and visual when elapse time is 15 sec and conclude that there is no significant difference between the two differences.
 
 
+## Question 4
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 13.48.31.png" width="100%"/>
+</p>
 
+### Answer:
+#### a
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.04.06.png" width="80%"/>
+</p>
+
+The results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.08.25.png" width="80%"/>
+</p>
+Let `poison` = `A` and `treatment` = `B`.\
+From the F-statistic of `A*B`, 1.22, and its p-value, $0.3189<0.05$, we can conclude that the interaction is not significant and then we drop the interaction term from the model. The final model and two-way ANOVA results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.17.32.png" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.17.44.png" width="80%"/>
+</p>
+
+#### b
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.20.38.png" width="80%"/>
+</p>
+
+The results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.20.54.png" width="80%"/>
+</p>
+From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ and the residual plot does not show any special pattern. And the error variance are roughly constant across all observations. Also, from QQ plot, all points roughly follow a straight line. So the model assumptions are reasonably met.
+
+#### c
+The interaction plot is as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.28.50.png" width="80%"/>
+</p>
+From the interaction plot, we can see that the interaction between `poison` and `treatment` is not significant. The lines for different levels of `treatment` are roughly parallel. This indicates that the interaction between `poison` and `treatment` is not significant and the effects of the two factors are almost additive.
+
+#### d 
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 14.54.36.png" width="80%"/>
+</p>
+
+The results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 15.22.57.png" width="80%"/>
+</p>
+So the $95\%$ confidence interval for the difference between the means of `poison` at level 1 and level 2 ($\alpha_{1}-\alpha_{2}$) is $(-0.0162, 0.390)$. Since we did log transformation to the response variable, we need to back-transform the confidence interval. The back-transformed confidence interval is $(e^{-0.0162}, e^{0.390}) = (0.984, 1.477)$. This is the $95\%$ confidence interval for the ratio of geometric means (or medians) of `poison` at level 1 and level 2. We are $95\%$ confident that the median survival time in units of 10 hour is between 0.520 and 0.660 times as long for `poison` at level 1 compared to `poison` at level 2.
+
+#### e
+The SAS codes are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 15.53.43.png" width="80%"/>
+</p>
+
+The results are as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 15.31.16.png" width="80%"/>
+</p>
+So the point estimate for $\beta_{1}-\beta_{2}-\beta_{3}+\beta_{4}$ is $-0.3943$, standard error is $0.1363$, the t-statistic is $-2.89$ and the p-value is $0.006<0.05$. So we reject the null hypothesis and conclude that there is significant evidence that the difference in means (on the log-transformed scale) for `treatment` 1 and 2 is not equal to the difference in means for `treatment` 3 and 4.
+
+The $95\%$ confidence interval for $\beta_{1}-\beta_{2}-\beta_{3}+\beta_{4}$ is 
+\begin{align*}
+&(-0.3943-t_{0.975, 42}*0.1363, -0.3943+t_{0.975, 42}*0.1363)\\
+&= (-0.3943-2.018*0.1363, -0.3943+2.018*0.1363)\\
+&= (-0.669, -0.119)
+\end{align*}
+where degree of freedom is $N-a-b+1 = 48-4-3+1 = 42$.
+
+## Question 5
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 13.48.41.png" width="100%"/>
+</p>
+
+### Answer:
+The table of means can be interpreted as follows:
+<p align="center">
+<img src="./screenshot/截屏2024-03-10 15.59.24.png" width="80%"/>
+</p>
+So the estimates of row means are $\bar{Y}_{1..} = \frac{23}{3}$ and $\bar{Y}_{2..} = \frac{37}{3}$. The estimates of column means are $\bar{Y}_{.1.} = 15$, $\bar{Y}_{.2.} = 9$ and $\bar{Y}_{.3.} = 6$. The estimate of the pooled mean is $\bar{Y_{...}}=10$.
+
+So the estimates of these quantities are as follows:
+
+::: {.table .table-responsive}
+| Parameter | Estimate | Estimate Value |
+|-----------|----------|:----------------:|
+| $\mu$     | $\bar{Y}_{...}$      | $10$            |
+| $\alpha_{1}$ | $\bar{Y}_{1..}-\bar{Y}_{...}$      | $-\frac{7}{3}$            |
+| $\alpha_{2}$ | $\bar{Y}_{2..}-\bar{Y}_{...}$      | $\frac{7}{3}$            |
+| $\beta_{1}$  | $\bar{Y}_{.1.}-\bar{Y}_{...}$      | $5$            |
+| $\beta_{2}$  | $\bar{Y}_{.2.}-\bar{Y}_{...}$      | $-1$            |
+| $\beta_{3}$  | $\bar{Y}_{.3.}-\bar{Y}_{...}$      | $-4$            |
+| $(\alpha\beta)_{11}$  | $\bar{Y}_{11.}-(\bar{Y}_{1..}+\bar{Y}_{.1.}-\bar{Y}_{...})$     | $\frac{1}{3}$          |
+| $(\alpha\beta)_{12}$  | $\bar{Y}_{12.}-(\bar{Y}_{1..}+\bar{Y}_{.2.}-\bar{Y}_{...})$      | $-\frac{2}{3}$            |
+| $(\alpha\beta)_{13}$  | $\bar{Y}_{13.}-(\bar{Y}_{1..}+\bar{Y}_{.3.}-\bar{Y}_{...})$      | $\frac{1}{3}$            |
+| $(\alpha\beta)_{21}$  | $\bar{Y}_{21.}-(\bar{Y}_{2..}+\bar{Y}_{.1.}-\bar{Y}_{...})$      | $-\frac{1}{3}$            |
+| $(\alpha\beta)_{22}$  | $\bar{Y}_{22.}-(\bar{Y}_{2..}+\bar{Y}_{.2.}-\bar{Y}_{...})$      | $\frac{2}{3}$            |
+| $(\alpha\beta)_{23}$  | $\bar{Y}_{23.}-(\bar{Y}_{2..}+\bar{Y}_{.3.}-\bar{Y}_{...})$      | $-\frac{1}{3}$            |
+:::
 
 
 
