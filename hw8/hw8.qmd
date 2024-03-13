@@ -34,14 +34,13 @@ The results for balanced data are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-03-08 16.39.58.png" width="80%"/>
 </p>
-In balanced data, where the cell sizes are equal, the Type I and Type III SS are identical. This is because the factors are uncorrelated predictors. So we can estimate the factor effects independently of one another and estimating the effects of each factor independently yields the same results as estimating them simultaneously in the presence of other factors.
+In balanced data, where the cell sizes are equal, the Type I and Type III SS are identical. This is because the factors are uncorrelated predictors. So we can estimate the factor effects independently of one another and estimating the marginal effects yields the same results as estimating the partial effects.
 
 The results for unbalanced data are as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-03-08 16.40.06.png" width="80%"/>
 </p>
-In unbalanced data, where the cell sizes are unequal, the Type I and Type III SS are different. This is because the factors are correlated predictors. Type I SS can vary depending on the order of entry of terms and may not provide a reliable assessment of each factor's significance.
-Type III SS provide a more reliable assessment of each factor's significance and the interaction term, as they compare models with and without each factor (or the interaction), independent of the order of entry of terms.
+In unbalanced data, where the cell sizes are unequal, the Type I and Type III SS are different. This is because the factors are correlated predictors. Tests for effects are not independent.
 
 
 ## Question 2
@@ -49,8 +48,12 @@ Type III SS provide a more reliable assessment of each factor's significance and
 **For the balanced and unbalanced data, provide a 2 x 3 table of cell means. By hand, compute the (unadjusted) factor means and least square (adjusted) means for each data set.**
 
 ### Answer: 
-
-
+<p align="center">
+<img src="./screenshot/WechatIMG772.jpg" width="80%"/>
+</p>
+<p align="center">
+<img src="./screenshot/WechatIMG773.jpg" width="80%"/>
+</p>
 
 ## Question 3
 
@@ -67,7 +70,7 @@ The constrast estimate result is as follows:
 <img src="./screenshot/截屏2024-03-10 15.21.57.png" width="80%"/>
 </p>
 
-The contrast estimate is $0.00057408$, which is close to 0. The F-statistic is $1.98$, and the p-value is $0.1843$. The p-value is greater than 0.05, so we fail to reject the null hypothesis that the difference between auditory and visual when elapse time is 10 sec is equal to the difference between auditory and visual when elapse time is 15 sec and conclude that there is no significant difference between the two differences.
+The contrast estimate is $0.00057408$, which is close to 0. The F-statistic is $1.98$, and the p-value is $0.1843$. The p-value is greater than 0.05, so we fail to reject the null hypothesis that the difference between auditory and visual when elapse time is 10 sec is equal to the difference between auditory and visual when elapse time is 15 sec and conclude that there is no significant evidence that the difference between auditory and visual when elapse time is 10 sec is not equal to the difference between auditory and visual when elapse time is 15 sec.
 
 
 ## Question 4
@@ -110,9 +113,9 @@ From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ a
 #### c
 The interaction plot is as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-10 14.28.50.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-13 15.55.27.png" width="80%"/>
 </p>
-From the interaction plot, we can see that the interaction between `poison` and `treatment` is not significant. The lines for different levels of `treatment` are roughly parallel. This indicates that the interaction between `poison` and `treatment` is not significant and the effects of the two factors are almost additive.
+From the interaction plot, we can see that the interaction between `poison` and `treatment` is not significant. The lines of `poison (A)` for different levels of `treatment (B)` are roughly parallel and the tendencies are similar. This indicates that the interaction between `poison` and `treatment` is not significant and the effects of the two factors are almost additive.
 
 #### d 
 The SAS codes are as follows:
@@ -176,12 +179,6 @@ So the estimates of these quantities are as follows:
 | $(\alpha\beta)_{22}$  | $\bar{Y}_{22.}-(\bar{Y}_{2..}+\bar{Y}_{.2.}-\bar{Y}_{...})$      | $\phantom{-}\frac{2}{3}$  |
 | $(\alpha\beta)_{23}$  | $\bar{Y}_{23.}-(\bar{Y}_{2..}+\bar{Y}_{.3.}-\bar{Y}_{...})$      | $-\frac{1}{3}$            |
 :::
-
-
-
-
-
-
 
 
 
