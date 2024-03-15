@@ -115,11 +115,6 @@ The interaction plot is as follows:
 <p align="center">
 <img src="./screenshot/截屏2024-03-10 14.28.50.png" width="80%"/>
 </p>
-<p align="center">
-<img src="./screenshot/截屏2024-03-13 15.55.27.png" width="80%"/>
-</p>
-From the interaction plot, we can see that the interaction between `poison` and `treatment` is not significant. The lines of `poison (A)` for different levels of `treatment (B)` are roughly parallel and the tendencies are similar. This indicates that the interaction between `poison` and `treatment` is not significant and the effects of the two factors are almost additive.
-
 
 #### d 
 The SAS codes are as follows:
