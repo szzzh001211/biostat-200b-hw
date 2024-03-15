@@ -113,21 +113,25 @@ From the plots above, it seems that $E(\epsilon_{i}) = 0$ for all $\textit{i}$ a
 #### c
 The interaction plot is as follows:
 <p align="center">
+<img src="./screenshot/截屏2024-03-10 14.28.50.png" width="80%"/>
+</p>
+<p align="center">
 <img src="./screenshot/截屏2024-03-13 15.55.27.png" width="80%"/>
 </p>
 From the interaction plot, we can see that the interaction between `poison` and `treatment` is not significant. The lines of `poison (A)` for different levels of `treatment (B)` are roughly parallel and the tendencies are similar. This indicates that the interaction between `poison` and `treatment` is not significant and the effects of the two factors are almost additive.
 
+
 #### d 
 The SAS codes are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-10 14.54.36.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-14 16.52.58.png" width="80%"/>
 </p>
 
 The results are as follows:
 <p align="center">
-<img src="./screenshot/截屏2024-03-10 15.22.57.png" width="80%"/>
+<img src="./screenshot/截屏2024-03-14 16.47.59.png" width="80%"/>
 </p>
-So the $95\%$ confidence interval for the difference between the means of `poison` at level 1 and level 2 ($\alpha_{1}-\alpha_{2}$) is $(-0.0162, 0.390)$. Since we did log transformation to the response variable, we need to back-transform the confidence interval. The back-transformed confidence interval is $(e^{-0.0162}, e^{0.390}) = (0.984, 1.477)$. This is the $95\%$ confidence interval for the ratio of geometric means (or medians) of `poison` at level 1 and level 2. We are $95\%$ confident that the median survival time in units of 10 hour is between 0.520 and 0.660 times as long for `poison` at level 1 compared to `poison` at level 2.
+The estimate for $\alpha_{1}-\alpha_{2}$ is $0.1867$ and we use back-transform to get the estimate for the ratio of geometric means (or medians) of `poison` at level 1 and level 2. It is $e^{0.1867} = 1.205$, which means the median survival time in units of 10 hour is about $20.5\%$ longer for `poison` at level 1 compared to `poison` at level 2. The $95\%$ confidence interval for the difference between the means of `poison` at level 1 and level 2 ($\alpha_{1}-\alpha_{2}$) for the log-transformed data is $(0.018, 0.355)$. Since we did log transformation to the response variable, we need to back-transform the confidence interval. The back-transformed $95\%$ confidence interval is $(e^{0.018}, e^{0.355}) = (1.018, 1.426)$. This is the $95\%$ confidence interval for the ratio of geometric means (or medians) of `poison` at level 1 and level 2.
 
 #### e
 The SAS codes are as follows:
